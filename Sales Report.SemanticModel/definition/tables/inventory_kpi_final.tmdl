@@ -1,0 +1,149 @@
+table inventory_kpi_final
+	lineageTag: 431538d8-1b4f-4556-9a27-ab00b90ae6b1
+	sourceLineageTag: [analytics].[inventory_kpi_final]
+
+	column Material
+		dataType: string
+		lineageTag: cc3e4a90-dd2e-4a26-9f7a-a75413fc9c72
+		sourceLineageTag: Material
+		summarizeBy: none
+		sourceColumn: Material
+
+		annotation SummarizationSetBy = Automatic
+
+	column Plant
+		dataType: string
+		lineageTag: a4c5efd3-2904-4c0d-b973-6b5a9dee31d7
+		sourceLineageTag: Plant
+		summarizeBy: none
+		sourceColumn: Plant
+
+		annotation SummarizationSetBy = Automatic
+
+	column DeadStock
+		dataType: double
+		lineageTag: 0ff81f95-0c15-4ebb-921c-bc15880d52c1
+		sourceLineageTag: DeadStock
+		summarizeBy: sum
+		sourceColumn: DeadStock
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SlowMovingStock
+		dataType: double
+		lineageTag: 19b5f274-b4d1-4d9f-b7a4-9b7b996612fe
+		sourceLineageTag: SlowMovingStock
+		summarizeBy: sum
+		sourceColumn: SlowMovingStock
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column NearExpiry
+		dataType: int64
+		formatString: 0
+		lineageTag: ccf21e54-957a-4cfd-be53-7e6321f0bbd5
+		sourceLineageTag: NearExpiry
+		summarizeBy: sum
+		sourceColumn: NearExpiry
+
+		annotation SummarizationSetBy = Automatic
+
+	column WCAR
+		dataType: double
+		lineageTag: d28bbff9-51d2-4dcd-8013-1ea8e2cc668b
+		sourceLineageTag: WCAR
+		summarizeBy: sum
+		sourceColumn: WCAR
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DOH
+		dataType: double
+		lineageTag: 70dbacac-1189-468a-8af5-874bf876ed8c
+		sourceLineageTag: DOH
+		summarizeBy: sum
+		sourceColumn: DOH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column InventoryTurns
+		dataType: double
+		lineageTag: 2dfff74c-90a0-4638-a5af-7e113d15e699
+		sourceLineageTag: InventoryTurns
+		summarizeBy: sum
+		sourceColumn: InventoryTurns
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column OTD_Pct
+		dataType: double
+		lineageTag: eb6407ba-6e94-4155-bd82-10ec36bab79d
+		sourceLineageTag: OTD_Pct
+		summarizeBy: sum
+		sourceColumn: OTD_Pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column FillRate
+		dataType: double
+		lineageTag: b2ed7d7c-47a6-49ef-a7d6-3c59654c0b8b
+		sourceLineageTag: FillRate
+		summarizeBy: sum
+		sourceColumn: FillRate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column LeadTime
+		dataType: double
+		lineageTag: 30a6817a-75ed-44c5-9f7e-808353daa5f3
+		sourceLineageTag: LeadTime
+		summarizeBy: sum
+		sourceColumn: LeadTime
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MAPVariance
+		dataType: double
+		lineageTag: 4dc4c050-7cd1-4b25-ba45-70e1b8383763
+		sourceLineageTag: MAPVariance
+		summarizeBy: sum
+		sourceColumn: MAPVariance
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TotalInventoryValue
+		dataType: double
+		lineageTag: 8306c48c-4a7f-40f7-9c87-627aa2740cd7
+		sourceLineageTag: TotalInventoryValue
+		summarizeBy: sum
+		sourceColumn: TotalInventoryValue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition inventory_kpi_final = entity
+		mode: directLake
+		source
+			entityName: inventory_kpi_final
+			schemaName: analytics
+			expressionSource: 'DirectLake - SCM_Silver_LH'
+

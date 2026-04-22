@@ -1,0 +1,49 @@
+table 'Revenue Breakdown Table'
+	lineageTag: adebec39-74bf-4357-a028-b61b52b0c2e9
+
+	column Category
+		lineageTag: 706b62cb-2b8c-45f6-8a5b-07dd49904e08
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Category]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Amount
+		lineageTag: c8b32456-b992-46ee-b47c-fdf76469641f
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Amount]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'Revenue Breakdown Table' = calculated
+		mode: import
+		source =
+				
+				VAR NewRevenue =
+				    CALCULATE(
+				        [Total Revenue],
+				        USERELATIONSHIP('Date'[Date], Customers[SignupDate])
+				    )
+				
+				VAR ChurnedRevenue =
+				    CALCULATE(
+				        [Total Revenue],
+				        USERELATIONSHIP('Date'[Date], Customers[ChurnDate])
+				    )
+				
+				VAR ExistingRevenue =
+				    [Total Revenue] - NewRevenue - ChurnedRevenue
+				
+				RETURN
+				    UNION(
+				        ROW("Category", "New Customers", "Amount", NewRevenue),
+				        ROW("Category", "Churned Customers", "Amount", -ChurnedRevenue),
+				        ROW("Category", "Existing Customers", "Amount", ExistingRevenue)
+				    )
+
+	annotation PBI_Id = bc58bd1a916f49bf81569055b3db4cf6
+

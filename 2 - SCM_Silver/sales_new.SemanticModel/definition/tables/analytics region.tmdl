@@ -1,0 +1,39 @@
+table 'analytics region'
+	lineageTag: fa62e1a6-019e-46bc-b70f-7fbd0191bb98
+
+	column LAND1
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 1aee5654-1d37-4f0e-89d9-c393aa0a5169
+		summarizeBy: none
+		sourceColumn: LAND1
+
+		annotation SummarizationSetBy = Automatic
+
+	column REGION
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 81b1f6f0-3582-4bf5-9835-27ec8c5692a0
+		summarizeBy: none
+		sourceColumn: REGION
+
+		annotation SummarizationSetBy = Automatic
+
+	column TEXT
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: d4770538-3fab-4d73-974a-97082f57d3ca
+		summarizeBy: none
+		sourceColumn: TEXT
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'analytics region' = m
+		mode: directQuery
+		source =
+				let
+				    Source = Sql.Database("ecs2ceyl3h7exlnafpr5d46fqi-gd7o55xabh6ufod5wszxfqw6pi.datawarehouse.fabric.microsoft.com", "SCM_Silver_LH"),
+				    analytics_region = Source{[Schema="analytics",Item="region"]}[Data]
+				in
+				    analytics_region
+

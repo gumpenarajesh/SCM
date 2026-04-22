@@ -1,0 +1,107 @@
+table customer_audit
+	lineageTag: e3a277ef-9a45-44d9-bd4f-015d9986205f
+	sourceLineageTag: [analytics].[customer_audit]
+
+	measure 'Sold-To Customers' = DISTINCTCOUNT('customer_audit'[Sold_To])
+		formatString: 0
+		lineageTag: 493a82f7-ed8d-49d6-9796-3b4308d056a5
+
+		changedProperty = Name
+
+	column Customer
+		dataType: string
+		lineageTag: 1065f24b-5dd1-4f30-8d3e-27bcd3ea9e03
+		sourceLineageTag: Customer
+		summarizeBy: none
+		sourceColumn: Customer
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sold_To
+		dataType: string
+		lineageTag: ce1aecb9-88ac-4d0f-9b5a-b5f0873f8790
+		sourceLineageTag: Sold_To
+		summarizeBy: none
+		sourceColumn: Sold_To
+
+		annotation SummarizationSetBy = Automatic
+
+	column Bill_To
+		dataType: string
+		lineageTag: c13252c7-4f29-4c5a-9af2-ba4a5bb9e34e
+		sourceLineageTag: Bill_To
+		summarizeBy: none
+		sourceColumn: Bill_To
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ship_To
+		dataType: string
+		lineageTag: ef326a67-5239-498b-a03a-e9772287b6c4
+		sourceLineageTag: Ship_To
+		summarizeBy: none
+		sourceColumn: Ship_To
+
+		annotation SummarizationSetBy = Automatic
+
+	column Payer
+		dataType: string
+		lineageTag: fed69592-aa3d-4a36-9bb1-a327edcfa26b
+		sourceLineageTag: Payer
+		summarizeBy: none
+		sourceColumn: Payer
+
+		annotation SummarizationSetBy = Automatic
+
+	column HglvCust
+		dataType: string
+		lineageTag: 4bed8fb5-c1f5-4826-9716-35e1347f41df
+		sourceLineageTag: HglvCust
+		summarizeBy: none
+		sourceColumn: HglvCust
+
+		annotation SummarizationSetBy = Automatic
+
+	column Name
+		dataType: string
+		lineageTag: 3527eced-4525-4f08-88de-e57bc71d4d87
+		sourceLineageTag: Name
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		lineageTag: 91cd7096-f5ec-4300-b843-95bcdabfa121
+		sourceLineageTag: Country
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	column Pal1_Customer
+		dataType: string
+		lineageTag: f5dcdbbf-bd23-40fc-a4f5-81b1ea357906
+		sourceLineageTag: Pal1_Customer
+		summarizeBy: none
+		sourceColumn: Pal1_Customer
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sales_Org
+		dataType: string
+		lineageTag: fdc47a9d-73df-4fd7-881d-998e27ce9004
+		sourceLineageTag: Sales_Org
+		summarizeBy: none
+		sourceColumn: Sales_Org
+
+		annotation SummarizationSetBy = Automatic
+
+	partition customer_audit = entity
+		mode: directLake
+		source
+			entityName: customer_audit
+			schemaName: analytics
+			expressionSource: 'DirectLake - SCM_Silver_LH'
+

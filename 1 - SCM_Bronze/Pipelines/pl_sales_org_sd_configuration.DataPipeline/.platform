@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "pl_sales_org_sd_configuration"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "ada0f8c2-6e73-b230-489a-d7d2d04f4da3"
+  }
+}

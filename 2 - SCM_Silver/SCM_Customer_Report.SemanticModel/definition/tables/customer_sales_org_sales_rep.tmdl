@@ -1,0 +1,77 @@
+table customer_sales_org_sales_rep
+	lineageTag: 43d9ef60-b942-4d74-be8c-bce525c15f55
+	sourceLineageTag: [analytics].[customer_sales_org_sales_rep]
+
+	measure 'Total Sales Reps' = DISTINCTCOUNT('customer_sales_org_sales_rep'[Sales_rep_for_ORDER_Text])
+		formatString: 0
+		lineageTag: 07dc1029-2a50-4026-b546-2bd8d13ba876
+
+		changedProperty = Name
+
+	measure 'Customers Assigned' = DISTINCTCOUNT('customer_sales_org_sales_rep'[Customer])
+		formatString: 0
+		lineageTag: b85b8062-7bb7-4796-810f-b80ad97e67f0
+
+		changedProperty = Name
+
+	column Client
+		dataType: string
+		lineageTag: 78772c45-8192-45dc-a4bb-f83126178a15
+		sourceLineageTag: Client
+		summarizeBy: none
+		sourceColumn: Client
+
+		annotation SummarizationSetBy = Automatic
+
+	column Customer
+		dataType: string
+		lineageTag: 86fc95f4-7cb1-4428-a79b-31c41fe87fb4
+		sourceLineageTag: Customer
+		summarizeBy: none
+		sourceColumn: Customer
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sales_Org.'
+		dataType: string
+		lineageTag: 9f5be37f-ce31-4b04-89e1-29cc5523086d
+		sourceLineageTag: Sales_Org.
+		summarizeBy: none
+		sourceColumn: Sales_Org.
+
+		annotation SummarizationSetBy = Automatic
+
+	column Partner_Functn
+		dataType: string
+		lineageTag: 574d729b-bdb6-43a9-a395-655ff0fb7c33
+		sourceLineageTag: Partner_Functn
+		summarizeBy: none
+		sourceColumn: Partner_Functn
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sales_rep_for_ORDER
+		dataType: string
+		lineageTag: b51d531a-2583-492b-8c5b-35d55b2b4205
+		sourceLineageTag: Sales_rep_for_ORDER
+		summarizeBy: none
+		sourceColumn: Sales_rep_for_ORDER
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sales_rep_for_ORDER_Text
+		dataType: string
+		lineageTag: f7fafea8-63a8-42d5-bbe0-5a6df21231d4
+		sourceLineageTag: Sales_rep_for_ORDER_Text
+		summarizeBy: none
+		sourceColumn: Sales_rep_for_ORDER_Text
+
+		annotation SummarizationSetBy = Automatic
+
+	partition customer_sales_org_sales_rep = entity
+		mode: directLake
+		source
+			entityName: customer_sales_org_sales_rep
+			schemaName: analytics
+			expressionSource: 'DirectLake - SCM_Silver_LH'
+

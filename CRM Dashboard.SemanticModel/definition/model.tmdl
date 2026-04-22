@@ -1,0 +1,33 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["Date","Customers","Deals","Revenue","SupportTickets","Crm Calculations","Regions","SalesReps","Departments","Forecast","Campaigns","FactMarketingPerformance","Leads"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+ref table Date
+ref table Customers
+ref table Deals
+ref table Revenue
+ref table SupportTickets
+ref table 'Crm Calculations'
+ref table 'Revenue Breakdown Table'
+ref table DateTableTemplate_88d8c316-83ac-4ed1-a1da-a2ff4f3fae24
+ref table LocalDateTable_725840cb-23e0-4f95-a98e-f04628658309
+ref table Regions
+ref table SalesReps
+ref table Departments
+ref table 'Revenue Change Drivers'
+ref table Forecast
+ref table Campaigns
+ref table LocalDateTable_6a1371d1-d088-4b02-b202-153310584cac
+ref table FactMarketingPerformance
+ref table Leads
+
+ref cultureInfo en-US
+

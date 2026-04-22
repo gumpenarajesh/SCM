@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Power BI for Everyone - Pulse Report"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "2cfda9df-34a6-9fc1-4411-f77e4e2041cd"
+  }
+}

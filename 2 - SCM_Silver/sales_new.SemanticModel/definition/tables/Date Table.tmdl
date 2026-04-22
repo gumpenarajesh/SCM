@@ -1,0 +1,76 @@
+table 'Date Table'
+	lineageTag: 410164c7-2725-462f-8acd-70a70782e8d7
+
+	column Date
+		formatString: dd/mm/yy
+		lineageTag: 9920a5b2-8e34-49a4-a12f-065d68592bff
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		variation Variation
+			isDefault
+			relationship: d2d4dd47-ac71-4172-8595-eedeac7d77ab
+			defaultHierarchy: LocalDateTable_a0812149-9514-44c3-8d8b-01ddb2fdc980.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column Year
+		formatString: 0
+		lineageTag: b71dca20-dd36-40ff-ab1c-68739ae348cc
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Year]
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthNo
+		formatString: 0
+		lineageTag: 25a2a2a8-8728-413e-9d62-63fc13ff9859
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [MonthNo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		lineageTag: e005e367-1715-4816-a904-2d2f17bd8063
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month]
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearMonth
+		lineageTag: 0aa1d0de-62ae-4bd2-a81f-e4f14df247b5
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [YearMonth]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Year'
+		lineageTag: bb826c08-1381-49a9-ae81-efea8fd22261
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month Year]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Date Table' = calculated
+		mode: import
+		source =
+				
+				ADDCOLUMNS(
+				    CALENDAR(DATE(2024,1,1), DATE(2025,12,31)),
+				    "Year", YEAR([Date]),
+				    "MonthNo", MONTH([Date]),
+				    "Month", FORMAT([Date], "MMM"),
+				    "YearMonth", FORMAT([Date], "YYYY-MM"),
+				    "Month Year", FORMAT([Date], "MMM YYYY")
+				)
+
+	annotation PBI_Id = f68c42d0d9ed492da3203a9839ddf8f7
+

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "pl_demand_planning"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "45296331-83ea-b62a-47e6-a8ac67bc3406"
+  }
+}

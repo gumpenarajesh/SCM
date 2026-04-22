@@ -1,0 +1,25 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["analytics material","analytics sales_report","analytics contract","analytics region","analytics current_stock","analytics purchasing_document"]
+
+ref table 'analytics material'
+ref table 'analytics sales_report'
+ref table 'analytics contract'
+ref table 'analytics region'
+ref table 'analytics current_stock'
+ref table 'Inventory Age Bucket'
+ref table 'analytics purchasing_document'
+ref table 'Date Table'
+ref table DateTableTemplate_89c6befd-601f-45b4-8442-b847872ef2c7
+ref table LocalDateTable_a0812149-9514-44c3-8d8b-01ddb2fdc980
+
+ref cultureInfo en-US
+

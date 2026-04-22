@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "analytics_Currency_Exchange_Rates_Pivot"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "26cddbf7-d7f9-b054-42eb-5e4bf2435299"
+  }
+}

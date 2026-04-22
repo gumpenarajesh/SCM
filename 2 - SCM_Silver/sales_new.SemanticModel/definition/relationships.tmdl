@@ -1,0 +1,86 @@
+relationship eb13f6ba-18ed-ae76-46c1-df5801c55eee
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: 'analytics contract'.'Sales_Org.'
+	toColumn: 'analytics sales_report'.'Sales_Org.'
+
+relationship 8eb33249-2a33-f4c2-e819-00f2c9aa1b64
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: 'analytics contract'.Item
+	toColumn: 'analytics sales_report'.Item
+
+relationship 8fe9c08f-3654-30ae-7bfa-44145c7c8943
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: 'analytics contract'.Created_on
+	toColumn: 'analytics sales_report'.Order_Creation_Date
+
+relationship b837cd4c-7ddc-34be-76f7-aa7e0a002a9d
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: 'analytics contract'.'Sales_Doc._Type'
+	toColumn: 'analytics sales_report'.Document_Type
+
+relationship 4c34430d-a202-d90a-5a20-80313f384e25
+	fromColumn: 'analytics material'.Material
+	toColumn: 'analytics sales_report'.Material
+
+relationship 8b3f2c1a-d5e6-d9ce-4318-8921845cc38b
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: 'analytics material'.Material_Type
+	toColumn: 'analytics sales_report'.Material_Text
+
+relationship 12d20c14-1744-1847-2310-c145024e7a2b
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	fromColumn: 'analytics sales_report'.Sales_Document
+	toColumn: 'analytics contract'.Sales_Document
+
+relationship 9718a82c-c7f2-5a2c-4e28-7210db87130b
+	isActive: false
+	fromColumn: 'analytics contract'.Net_value
+	toColumn: 'analytics sales_report'.Net_Value
+
+relationship b603266d-a393-0f7a-ee0b-3e5ea6631db8
+	isActive: false
+	fromColumn: 'analytics contract'.'Prod.hierarchy'
+	toColumn: 'analytics sales_report'.Product_Hierarchy
+
+relationship db392f10-b6ba-0331-c3a2-ff63aa7d1d2f
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: 'analytics contract'.Region
+	toColumn: 'analytics sales_report'.Region
+
+relationship 7ce48c99-fdd4-7516-aafe-d47cf6847905
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: 'analytics region'.REGION
+	toColumn: 'analytics sales_report'.Region
+
+relationship 56c99fd5-21a2-2751-b580-e219486533e1
+	isActive: false
+	fromColumn: 'analytics sales_report'.Country
+	toColumn: 'analytics region'.LAND1
+
+relationship 359367eb-ec1f-803b-0305-f521d6741874
+	isActive: false
+	fromColumn: 'analytics current_stock'.'Inventory Age Bucket'
+	toColumn: 'Inventory Age Bucket'.'Inventory Age Bucket'
+
+relationship d2d4dd47-ac71-4172-8595-eedeac7d77ab
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Date Table'.Date
+	toColumn: LocalDateTable_a0812149-9514-44c3-8d8b-01ddb2fdc980.Date
+
+relationship 7b86a4e2-ff99-5fcc-1e67-2f97908e17fc
+	fromColumn: 'analytics purchasing_document'.GR_date
+	toColumn: 'Date Table'.Date
+

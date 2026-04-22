@@ -1,0 +1,20 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["analytics current_stock","analytics delivery_time_audit","analytics inventory_kpi_final","analytics purchasing_document","analytics stock_movement"]
+
+ref table 'analytics current_stock'
+ref table 'analytics delivery_time_audit'
+ref table 'analytics inventory_kpi_final'
+ref table 'analytics purchasing_document'
+ref table 'analytics stock_movement'
+
+ref cultureInfo en-US
+

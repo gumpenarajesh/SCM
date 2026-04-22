@@ -1,0 +1,87 @@
+table Forecast
+	lineageTag: 2fbc214d-4730-436c-9531-d41863317cb1
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 0560cfad-fb57-4a5a-8486-1be78927a4f8
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ForecastedRevenue
+		dataType: double
+		lineageTag: ddc9dc4e-2aaa-422b-a742-3d822ca53486
+		summarizeBy: sum
+		sourceColumn: ForecastedRevenue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ForecastedDeals
+		dataType: int64
+		formatString: 0
+		lineageTag: 0ffda806-f340-4f68-9e0e-6055ff11d527
+		summarizeBy: sum
+		sourceColumn: ForecastedDeals
+
+		annotation SummarizationSetBy = Automatic
+
+	column ForecastedNewCustomers
+		dataType: int64
+		formatString: 0
+		lineageTag: 3131050b-3dff-4f59-84b2-f8e115113f9c
+		summarizeBy: sum
+		sourceColumn: ForecastedNewCustomers
+
+		annotation SummarizationSetBy = Automatic
+
+	column ForecastedChurnRate(%)
+		dataType: double
+		lineageTag: 68a0d449-1e0c-4221-a7c4-2e519047871e
+		summarizeBy: sum
+		sourceColumn: ForecastedChurnRate(%)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ForecastedWinRate(%)
+		dataType: double
+		lineageTag: 519d7c89-858e-451d-9b79-c51f0abcbae7
+		summarizeBy: sum
+		sourceColumn: ForecastedWinRate(%)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ForecastedCSAT
+		dataType: double
+		lineageTag: 7665a204-1dec-4aa0-b2be-ebbd642f588b
+		summarizeBy: sum
+		sourceColumn: ForecastedCSAT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Forecast = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("\\Mac\Home\Documents\Power BI For Everyone\Course Presentation\Module 6 Data Viz\CRM Template\Data\CRM_Dashboard_WithRegionID.xlsx"), null, true),
+				    Forecast_Sheet = Source{[Item="Forecast",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Forecast_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Date", type date}, {"ForecastedRevenue", type number}, {"ForecastedDeals", Int64.Type}, {"ForecastedNewCustomers", Int64.Type}, {"ForecastedChurnRate(%)", type number}, {"ForecastedWinRate(%)", type number}, {"ForecastedCSAT", type number}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

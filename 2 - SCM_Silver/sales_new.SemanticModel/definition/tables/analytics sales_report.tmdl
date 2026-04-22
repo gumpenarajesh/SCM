@@ -1,0 +1,345 @@
+table 'analytics sales_report'
+	lineageTag: e5bb25b4-6f86-4b68-80d6-3060c7c8d2da
+
+	measure Transactions = ```
+			DISTINCTCOUNT('analytics sales_report'[Sales_Document])
+			
+			```
+		formatString: 0
+		lineageTag: a8342f12-d14e-4e15-864e-af621cff3ac1
+
+	measure Invoices = ```
+			DISTINCTCOUNT('analytics sales_report'[Billing_Document])
+			
+			```
+		formatString: 0
+		lineageTag: dd3d350b-b8c7-48b0-ab37-f6027f90dbfc
+
+	measure Revenue = ```
+			SUM('analytics sales_report'[Net_Value])
+			
+			```
+		lineageTag: f2350b9f-51cc-4678-97ec-6cd29928176b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Profit =
+			
+			SUMX(
+			    'analytics sales_report',
+			    'analytics sales_report'[Net_Value] *
+			    SWITCH(
+			        'analytics sales_report'[Material_Text],
+			        "Astra Compact", 0.15,
+			        "Nova EV", 0.21,
+			        "Solar GT Sports", 0.25,
+			        "Vortex Sedan", 0.15,
+			        "Zenith SUV", 0.20,
+			        0.05
+			    )
+			)
+		lineageTag: af2f945b-4903-49c5-9fdd-de7cadb64b01
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Product Sales Count' = COUNTROWS('analytics sales_report')
+		formatString: 0
+		lineageTag: bcf223e8-c3fa-4ea4-b0b2-7430d0507aba
+
+	measure 'Profit LY' =
+			
+			CALCULATE(
+			    [Profit],
+			    FILTER(
+			        ALL('analytics sales_report'[Billing_Date]),
+			        YEAR('analytics sales_report'[Billing_Date]) = 2024
+			    )
+			)
+		lineageTag: 5f27b3a5-e67b-4094-97e7-13dd06a410c0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Profit YTD' =
+			
+			CALCULATE(
+			    [Profit],
+			    FILTER(
+			        ALL('analytics sales_report'[Billing_Date]),
+			        YEAR('analytics sales_report'[Billing_Date]) = 2025
+			    )
+			)
+		formatString: 0
+		lineageTag: 84200b8c-ce50-40b4-94f0-adc409a18973
+
+	measure 'Revenue YTD' =
+			
+			CALCULATE(
+			    [Revenue],
+			    FILTER(
+			        ALL('analytics sales_report'[Billing_Date]),
+			        YEAR('analytics sales_report'[Billing_Date]) = 2025
+			    )
+			)
+		lineageTag: 7a07b464-0b8d-4076-a40d-e45f912abc74
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Transactions YTD' =
+			
+			CALCULATE(
+			    [Transactions],
+			    FILTER(
+			        ALL('analytics sales_report'[Billing_Date]),
+			        YEAR('analytics sales_report'[Billing_Date]) = 2025
+			    )
+			)
+		formatString: 0
+		lineageTag: 91a50c59-5ad3-44cf-bfec-15ea876fb122
+
+	measure 'Invoices YTD' =
+			
+			CALCULATE(
+			    [Invoices],
+			    FILTER(
+			        ALL('analytics sales_report'[Billing_Date]),
+			        YEAR('analytics sales_report'[Billing_Date]) = 2025
+			    )
+			)
+		formatString: 0
+		lineageTag: c0757c9c-8249-48c0-9a4d-98c25fff4749
+
+	measure 'Revenue LY' =
+			
+			CALCULATE(
+			    [Revenue],
+			    FILTER(
+			        ALL('analytics sales_report'[Billing_Date]),
+			        YEAR('analytics sales_report'[Billing_Date]) = 2024
+			    )
+			)
+		lineageTag: bb0972c8-002c-4e03-88f1-fb91bf7a257a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Transactions LY' =
+			
+			CALCULATE(
+			    [Transactions],
+			    FILTER(
+			        ALL('analytics sales_report'[Billing_Date]),
+			        YEAR('analytics sales_report'[Billing_Date]) = 2024
+			    )
+			)
+		formatString: 0
+		lineageTag: 51abe79b-36c4-44d1-be1f-8b958091bcb0
+
+	measure 'Invoices LY' =
+			
+			CALCULATE(
+			    [Invoices],
+			    FILTER(
+			        ALL('analytics sales_report'[Billing_Date]),
+			        YEAR('analytics sales_report'[Billing_Date]) = 2024
+			    )
+			)
+		formatString: 0
+		lineageTag: 57725073-1c07-46c1-94ca-0336ec938ba9
+
+	column 'Sales_Org.'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 4844280f-d0cc-4db6-b16b-bb35bd32e63e
+		summarizeBy: none
+		sourceColumn: Sales_Org.
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sales_Document
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 1020ddfd-fba9-4c20-b19f-10ce0f2bd340
+		summarizeBy: none
+		sourceColumn: Sales_Document
+
+		annotation SummarizationSetBy = Automatic
+
+	column Item
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: df4d3b03-f959-426c-a818-efafe6ffc79a
+		summarizeBy: none
+		sourceColumn: Item
+
+		annotation SummarizationSetBy = Automatic
+
+	column Order_Creation_Date
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 7f429ffe-cadd-4595-a0cb-abc5920075d7
+		summarizeBy: none
+		sourceColumn: Order_Creation_Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Document_Type
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 4f1b2b5f-4d52-4f3a-9c98-624e7eb7bdb9
+		summarizeBy: none
+		sourceColumn: Document_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Billing_Document
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 4fa79bd9-f8e3-431a-8ae5-81462f4bb4c5
+		summarizeBy: none
+		sourceColumn: Billing_Document
+
+		annotation SummarizationSetBy = Automatic
+
+	column Billing_Item
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: d4331e8e-67cd-47f4-9a3f-8398fb9bff10
+		summarizeBy: none
+		sourceColumn: Billing_Item
+
+		annotation SummarizationSetBy = Automatic
+
+	column Billing_Date
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 621ff1b8-8dbc-44cd-8d6c-f5a8d9f99aa1
+		summarizeBy: none
+		sourceColumn: Billing_Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Material
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 46789673-62c5-4fc4-ba1b-94f6cfd1974b
+		summarizeBy: none
+		sourceColumn: Material
+
+		annotation SummarizationSetBy = Automatic
+
+	column Material_Text
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: a390df07-9f8b-40d1-8da7-7b21ebc8ce36
+		summarizeBy: none
+		sourceColumn: Material_Text
+
+		annotation SummarizationSetBy = Automatic
+
+	column Net_Value
+		dataType: double
+		sourceProviderType: decimal(15, 2)
+		lineageTag: ed35cde6-3edd-4752-b5fc-573900fc2d57
+		summarizeBy: sum
+		sourceColumn: Net_Value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SD_Document_Currency
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 20f0492b-ca58-43ca-8b73-a50b927c4a6b
+		summarizeBy: none
+		sourceColumn: SD_Document_Currency
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product_Hierarchy
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: c8dc5779-63bf-4a42-8119-90336f48f000
+		summarizeBy: none
+		sourceColumn: Product_Hierarchy
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 94ed8d46-b6b2-41c5-aa13-9e02a7da7a00
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year = YEAR('analytics sales_report'[Order_Creation_Date])
+		formatString: 0
+		lineageTag: a605da71-44cc-41e9-a20d-332b99283a04
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column PH_Product_Line_Text
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 88504003-7e99-473e-9757-c2d5713390c7
+		summarizeBy: none
+		sourceColumn: PH_Product_Line_Text
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Numner' = MONTH('analytics sales_report'[Billing_Date])
+		formatString: 0
+		lineageTag: 412b1e98-fb8d-4c2a-a180-f363ed30dac4
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Name' = SWITCH(MONTH('analytics sales_report'[Billing_Date]), 1, "Jan", 2, "Feb", 3, "Mar", 4, "Apr", 5, "May", 6, "Jun", 7, "Jul", 8, "Aug", 9, "Sep", 10, "Oct", 11, "Nov", 12, "Dec")
+		lineageTag: b89b3cca-93ba-4189-acb9-249156176ad5
+		summarizeBy: none
+		sortByColumn: 'Month Numner'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 0d015b0e-1011-412f-a069-5ed71051e7cb
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country_Text
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 19845b4d-bd9b-4c3c-9738-b0ec5442ee21
+		summarizeBy: none
+		sourceColumn: Country_Text
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Inventory Age Bucket Dim'
+		type: calculated
+		lineageTag: 2b0a1078-6ffe-4f4a-b159-09cff522f250
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'analytics sales_report' = m
+		mode: directQuery
+		source =
+				let
+				    Source = Sql.Database("ecs2ceyl3h7exlnafpr5d46fqi-gd7o55xabh6ufod5wszxfqw6pi.datawarehouse.fabric.microsoft.com", "SCM_Silver_LH"),
+				    analytics_sales_report = Source{[Schema="analytics",Item="sales_report"]}[Data]
+				in
+				    analytics_sales_report
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

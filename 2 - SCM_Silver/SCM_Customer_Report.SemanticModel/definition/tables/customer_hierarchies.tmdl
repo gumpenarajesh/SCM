@@ -1,0 +1,154 @@
+table customer_hierarchies
+	lineageTag: 4fc30d02-5303-411d-b0a8-50a63bb0d3bc
+	sourceLineageTag: [analytics].[customer_hierarchies]
+
+	measure 'Customers in Hierarchy' =
+			
+			DISTINCTCOUNT('customer_hierarchies'[Customer])
+		formatString: 0
+		lineageTag: 458c951c-881c-47b9-85bc-102fe32acf92
+
+		changedProperty = Name
+
+	column Hierarchy_type
+		dataType: string
+		lineageTag: b84aee72-2eb1-4055-97ca-c06884e38d1c
+		sourceLineageTag: Hierarchy_type
+		summarizeBy: none
+		sourceColumn: Hierarchy_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hierarchy_type_Text
+		dataType: string
+		lineageTag: f46b01b7-15ce-471a-93d2-51f379a2458f
+		sourceLineageTag: Hierarchy_type_Text
+		summarizeBy: none
+		sourceColumn: Hierarchy_type_Text
+
+		annotation SummarizationSetBy = Automatic
+
+	column Customer
+		dataType: string
+		lineageTag: 41d4b7a1-2818-417a-a65c-998c487dadbb
+		sourceLineageTag: Customer
+		summarizeBy: none
+		sourceColumn: Customer
+
+		annotation SummarizationSetBy = Automatic
+
+	column Name
+		dataType: string
+		lineageTag: c2763d8f-4967-4836-9356-4ca36de1db92
+		sourceLineageTag: Name
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sales_Org.'
+		dataType: string
+		lineageTag: fe462f05-338a-42bd-b06d-1858f15764d9
+		sourceLineageTag: Sales_Org.
+		summarizeBy: none
+		sourceColumn: Sales_Org.
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Distr._Channel'
+		dataType: string
+		lineageTag: a4877168-3145-46f2-ae4a-5ec49a023068
+		sourceLineageTag: Distr._Channel
+		summarizeBy: none
+		sourceColumn: Distr._Channel
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product_group
+		dataType: string
+		lineageTag: 42ed09d9-d872-47ec-8791-75427d46da44
+		sourceLineageTag: Product_group
+		summarizeBy: none
+		sourceColumn: Product_group
+
+		annotation SummarizationSetBy = Automatic
+
+	column Valid_from
+		dataType: string
+		lineageTag: aa2a1b18-2f8b-447c-9b5c-6df863de6b38
+		sourceLineageTag: Valid_from
+		summarizeBy: none
+		sourceColumn: Valid_from
+
+		annotation SummarizationSetBy = Automatic
+
+	column Valid_to
+		dataType: string
+		lineageTag: 90dc4a12-1bad-4e33-865f-072b4fb897e6
+		sourceLineageTag: Valid_to
+		summarizeBy: none
+		sourceColumn: Valid_to
+
+		annotation SummarizationSetBy = Automatic
+
+	column HglvCust
+		dataType: string
+		lineageTag: b9509feb-ab19-4edd-b290-1144160b1e15
+		sourceLineageTag: HglvCust
+		summarizeBy: none
+		sourceColumn: HglvCust
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Hglv_sales_org.'
+		dataType: string
+		lineageTag: 165abe2f-f762-43c2-a918-624aca649eeb
+		sourceLineageTag: Hglv_sales_org.
+		summarizeBy: none
+		sourceColumn: Hglv_sales_org.
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hglv_ProdGroup
+		dataType: string
+		lineageTag: dc6a4977-4e59-4a9b-ae5e-712d7938002b
+		sourceLineageTag: Hglv_ProdGroup
+		summarizeBy: none
+		sourceColumn: Hglv_ProdGroup
+
+		annotation SummarizationSetBy = Automatic
+
+	column Rebate
+		dataType: string
+		lineageTag: 61ebbafc-5902-4f40-8030-a8b9de6c15d3
+		sourceLineageTag: Rebate
+		summarizeBy: none
+		sourceColumn: Rebate
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Price_determin.'
+		dataType: string
+		lineageTag: 3fc58153-6310-41a1-ae22-2e4e10bc2c40
+		sourceLineageTag: Price_determin.
+		summarizeBy: none
+		sourceColumn: Price_determin.
+
+		annotation SummarizationSetBy = Automatic
+
+	column INTEGRATION_ID
+		dataType: string
+		lineageTag: 069bd339-7b44-494a-9efa-5e982425bc20
+		sourceLineageTag: INTEGRATION_ID
+		summarizeBy: none
+		sourceColumn: INTEGRATION_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition customer_hierarchies = entity
+		mode: directLake
+		source
+			entityName: customer_hierarchies
+			schemaName: analytics
+			expressionSource: 'DirectLake - SCM_Silver_LH'
+

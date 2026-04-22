@@ -1,0 +1,292 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "Copy",
+        "typeProperties": {
+          "source": {
+            "type": "SapHanaSource",
+            "partitionOption": "None",
+            "datasetSettings": {
+              "type": "SapHanaTable",
+              "typeProperties": {
+                "schema": "SAPHANADB",
+                "table": "TVST"
+              },
+              "schema": [],
+              "externalReferences": {
+                "connection": "052d2953-a909-4bb9-a3cc-b15a371f00c1"
+              },
+              "annotations": []
+            }
+          },
+          "sink": {
+            "type": "LakehouseTableSink",
+            "tableActionOption": "Upsert",
+            "applyVOrder": false,
+            "upsertSettings": {
+              "keys": [
+                "MANDT",
+                "VSTEL"
+              ]
+            },
+            "datasetSettings": {
+              "type": "LakehouseTable",
+              "typeProperties": {
+                "schema": "sap",
+                "table": "tvst"
+              },
+              "schema": [],
+              "linkedService": {
+                "name": "SCM_Bronze_LH",
+                "properties": {
+                  "type": "Lakehouse",
+                  "typeProperties": {
+                    "artifactId": "67c1ab39-7d32-afb6-49f6-afd1f8eb1159",
+                    "workspaceId": "00000000-0000-0000-0000-000000000000",
+                    "rootFolder": "Tables"
+                  },
+                  "annotations": []
+                }
+              },
+              "annotations": []
+            }
+          },
+          "translator": {
+            "type": "TabularTranslator",
+            "typeConversion": true,
+            "typeConversionSettings": {
+              "allowDataTruncation": true,
+              "treatBooleanAsNumber": false
+            }
+          },
+          "enableStaging": false
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "TVST",
+        "dependsOn": []
+      },
+      {
+        "type": "Copy",
+        "typeProperties": {
+          "source": {
+            "type": "SapHanaSource",
+            "partitionOption": "None",
+            "datasetSettings": {
+              "type": "SapHanaTable",
+              "typeProperties": {
+                "schema": "SAPHANADB",
+                "table": "TVSTT"
+              },
+              "schema": [],
+              "externalReferences": {
+                "connection": "052d2953-a909-4bb9-a3cc-b15a371f00c1"
+              },
+              "annotations": []
+            }
+          },
+          "sink": {
+            "type": "LakehouseTableSink",
+            "tableActionOption": "Upsert",
+            "applyVOrder": false,
+            "upsertSettings": {
+              "keys": [
+                "MANDT",
+                "SPRAS",
+                "VSTEL"
+              ]
+            },
+            "datasetSettings": {
+              "type": "LakehouseTable",
+              "typeProperties": {
+                "schema": "sap",
+                "table": "tvstt"
+              },
+              "schema": [],
+              "linkedService": {
+                "name": "SCM_Bronze_LH",
+                "properties": {
+                  "type": "Lakehouse",
+                  "typeProperties": {
+                    "artifactId": "67c1ab39-7d32-afb6-49f6-afd1f8eb1159",
+                    "workspaceId": "00000000-0000-0000-0000-000000000000",
+                    "rootFolder": "Tables"
+                  },
+                  "annotations": []
+                }
+              },
+              "annotations": []
+            }
+          },
+          "translator": {
+            "type": "TabularTranslator",
+            "typeConversion": true,
+            "typeConversionSettings": {
+              "allowDataTruncation": true,
+              "treatBooleanAsNumber": false
+            }
+          },
+          "enableStaging": false
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "TVSTT",
+        "dependsOn": []
+      },
+      {
+        "type": "Copy",
+        "typeProperties": {
+          "source": {
+            "type": "SapHanaSource",
+            "partitionOption": "None",
+            "datasetSettings": {
+              "type": "SapHanaTable",
+              "typeProperties": {
+                "schema": "SAPHANADB",
+                "table": "TVRO"
+              },
+              "schema": [],
+              "externalReferences": {
+                "connection": "052d2953-a909-4bb9-a3cc-b15a371f00c1"
+              },
+              "annotations": []
+            }
+          },
+          "sink": {
+            "type": "LakehouseTableSink",
+            "tableActionOption": "Upsert",
+            "applyVOrder": false,
+            "upsertSettings": {
+              "keys": [
+                "MANDT",
+                "ROUTE"
+              ]
+            },
+            "datasetSettings": {
+              "type": "LakehouseTable",
+              "typeProperties": {
+                "schema": "sap",
+                "table": "tvro"
+              },
+              "schema": [],
+              "linkedService": {
+                "name": "SCM_Bronze_LH",
+                "properties": {
+                  "type": "Lakehouse",
+                  "typeProperties": {
+                    "artifactId": "67c1ab39-7d32-afb6-49f6-afd1f8eb1159",
+                    "workspaceId": "00000000-0000-0000-0000-000000000000",
+                    "rootFolder": "Tables"
+                  },
+                  "annotations": []
+                }
+              },
+              "annotations": []
+            }
+          },
+          "translator": {
+            "type": "TabularTranslator",
+            "typeConversion": true,
+            "typeConversionSettings": {
+              "allowDataTruncation": true,
+              "treatBooleanAsNumber": false
+            }
+          },
+          "enableStaging": false
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "TVRO",
+        "dependsOn": []
+      },
+      {
+        "type": "Copy",
+        "typeProperties": {
+          "source": {
+            "type": "SapHanaSource",
+            "partitionOption": "None",
+            "datasetSettings": {
+              "type": "SapHanaTable",
+              "typeProperties": {
+                "schema": "SAPHANADB",
+                "table": "TVROT"
+              },
+              "schema": [],
+              "externalReferences": {
+                "connection": "052d2953-a909-4bb9-a3cc-b15a371f00c1"
+              },
+              "annotations": []
+            }
+          },
+          "sink": {
+            "type": "LakehouseTableSink",
+            "tableActionOption": "Upsert",
+            "applyVOrder": false,
+            "upsertSettings": {
+              "keys": [
+                "MANDT",
+                "SPRAS",
+                "ROUTE"
+              ]
+            },
+            "datasetSettings": {
+              "type": "LakehouseTable",
+              "typeProperties": {
+                "schema": "sap",
+                "table": "tvrot"
+              },
+              "schema": [],
+              "linkedService": {
+                "name": "SCM_Bronze_LH",
+                "properties": {
+                  "type": "Lakehouse",
+                  "typeProperties": {
+                    "artifactId": "67c1ab39-7d32-afb6-49f6-afd1f8eb1159",
+                    "workspaceId": "00000000-0000-0000-0000-000000000000",
+                    "rootFolder": "Tables"
+                  },
+                  "annotations": []
+                }
+              },
+              "annotations": []
+            }
+          },
+          "translator": {
+            "type": "TabularTranslator",
+            "typeConversion": true,
+            "typeConversionSettings": {
+              "allowDataTruncation": true,
+              "treatBooleanAsNumber": false
+            }
+          },
+          "enableStaging": false
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "TVROT",
+        "dependsOn": []
+      }
+    ]
+  }
+}

@@ -1,0 +1,29 @@
+table 'Inventory Age Bucket'
+	lineageTag: 1f948c16-068f-4325-bb89-1253903251df
+
+	column 'Inventory Age Bucket'
+		formatString: 0
+		lineageTag: 505085a1-1338-45e7-89fe-e4db48e1aee4
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Inventory Age Bucket]
+
+		annotation SummarizationSetBy = Automatic
+
+	column SortOrder
+		formatString: 0
+		lineageTag: b5e4b883-eba2-4d72-85f0-f4833544dc76
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [SortOrder]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Inventory Age Bucket' = calculated
+		mode: import
+		source = Row("Inventory Age Bucket", BLANK(), "SortOrder", BLANK())
+
+	annotation PBI_Id = 6f08396c1c9d4aa688c426f00a6f40f4
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

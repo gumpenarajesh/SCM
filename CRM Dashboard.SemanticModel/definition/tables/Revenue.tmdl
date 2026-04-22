@@ -1,0 +1,104 @@
+table Revenue
+	lineageTag: 6f54bdbe-e31d-4a8c-8117-e3059bed1cf2
+
+	column CustomerID
+		dataType: int64
+		formatString: 0
+		lineageTag: 73b3cac3-7575-4021-9e7f-6deb74d550e6
+		summarizeBy: none
+		sourceColumn: CustomerID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 35bb0414-9d21-4fc9-8236-156ddf60fe8a
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column RevenueAmount
+		dataType: double
+		lineageTag: 689362f5-dde0-414d-86ea-5a7aa404819e
+		summarizeBy: sum
+		sourceColumn: RevenueAmount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column RevenueChannel
+		dataType: string
+		lineageTag: 9f1eda4a-65fd-49a9-9daa-3272cc41ea82
+		summarizeBy: none
+		sourceColumn: RevenueChannel
+
+		annotation SummarizationSetBy = Automatic
+
+	column RegionID
+		dataType: string
+		lineageTag: f64e89df-da12-45cc-a145-5fabf5a5e4ca
+		summarizeBy: none
+		sourceColumn: RegionID
+
+		annotation SummarizationSetBy = Automatic
+
+	column RevenueID
+		dataType: string
+		lineageTag: cf6f4be7-f9f9-4d24-92b1-cc9e50663b81
+		summarizeBy: none
+		sourceColumn: RevenueID
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerStatus
+		dataType: string
+		lineageTag: 41730ef7-e9b9-477f-8eb1-58699aabe275
+		summarizeBy: none
+		sourceColumn: CustomerStatus
+
+		annotation SummarizationSetBy = Automatic
+
+	column RevenueType
+		dataType: string
+		lineageTag: 6c825e75-b839-47b5-8ae1-9c3a79237a3f
+		summarizeBy: none
+		sourceColumn: RevenueType
+
+		annotation SummarizationSetBy = Automatic
+
+	column DepartmentID
+		dataType: string
+		lineageTag: 5e067589-f1d6-4617-abf8-4a5e16d59b66
+		summarizeBy: none
+		sourceColumn: DepartmentID
+
+		annotation SummarizationSetBy = Automatic
+
+	column SalesRepID
+		dataType: string
+		lineageTag: 8f02e65e-11fa-46db-a0a8-dddbba16bf4e
+		summarizeBy: none
+		sourceColumn: SalesRepID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Revenue = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("\\Mac\Home\Documents\Power BI For Everyone\Course Presentation\Module 6 Data Viz\CRM Template\Data\CRM_Dashboard_WithRegionID.xlsx"), null, true),
+				    Revenue_Sheet = Source{[Item="Revenue",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Revenue_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"CustomerID", Int64.Type}, {"Date", type date}, {"RevenueAmount", type number}, {"RevenueChannel", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

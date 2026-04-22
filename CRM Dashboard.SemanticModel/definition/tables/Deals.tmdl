@@ -1,0 +1,140 @@
+table Deals
+	lineageTag: 64b4bedb-ef3f-4866-b433-ab1a8bab606d
+
+	column DealID
+		dataType: int64
+		formatString: 0
+		lineageTag: 17c3b4bd-6d58-4a74-9871-2a07b4595302
+		summarizeBy: count
+		sourceColumn: DealID
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerID
+		dataType: int64
+		formatString: 0
+		lineageTag: 4282e43c-117f-4a43-9200-5f69a0f0a3df
+		summarizeBy: none
+		sourceColumn: CustomerID
+
+		annotation SummarizationSetBy = Automatic
+
+	column DealValue
+		dataType: double
+		lineageTag: cbb9ce0e-e765-4abd-ac40-49fa0cf4133f
+		summarizeBy: sum
+		sourceColumn: DealValue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DealStage
+		dataType: string
+		lineageTag: f60bacb5-3eee-48b2-9a5a-2600c30c1c19
+		summarizeBy: none
+		sourceColumn: DealStage
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 4b47e8e8-0a61-48b4-937d-79761453e88d
+		summarizeBy: none
+		sourceColumn: CreatedDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ClosedDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: b4d477d8-c76f-4e01-bf4f-384da77f03ed
+		summarizeBy: none
+		sourceColumn: ClosedDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column SalesOwner
+		dataType: string
+		lineageTag: d10711a6-0b4e-4115-ba26-d9b67d55f94e
+		summarizeBy: none
+		sourceColumn: SalesOwner
+
+		annotation SummarizationSetBy = Automatic
+
+	column Department
+		dataType: string
+		lineageTag: 0a0344a9-5a91-48bd-870d-f787cf3b1177
+		summarizeBy: none
+		sourceColumn: Department
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: 16a4bd26-1e31-48e4-ad74-569cf6e49894
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column RegionID
+		dataType: string
+		lineageTag: eeedc05e-b262-49a0-963c-318405362350
+		summarizeBy: none
+		sourceColumn: RegionID
+
+		annotation SummarizationSetBy = Automatic
+
+	column SalesRepID
+		dataType: string
+		lineageTag: fe9625a9-3d71-47a7-9e76-bc1d3dacdb50
+		summarizeBy: none
+		sourceColumn: SalesRepID
+
+		annotation SummarizationSetBy = Automatic
+
+	column DepartmentID
+		dataType: string
+		lineageTag: 0bd35dac-ac2a-47a9-8ca2-4b4d21cbcb61
+		summarizeBy: none
+		sourceColumn: DepartmentID
+
+		annotation SummarizationSetBy = Automatic
+
+	column LeadID
+		dataType: string
+		lineageTag: d28024cd-ba2e-4305-a97b-8513347dffe7
+		summarizeBy: none
+		sourceColumn: LeadID
+
+		annotation SummarizationSetBy = Automatic
+
+	column CampaignID
+		dataType: string
+		lineageTag: 81acc5ce-0162-48b9-8012-4d5fd7273995
+		summarizeBy: none
+		sourceColumn: CampaignID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Deals = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("\\Mac\Home\Documents\Power BI For Everyone\Course Presentation\Module 6 Data Viz\CRM Template\Data\CRM_Dashboard_WithRegionID.xlsx"), null, true),
+				    Deals_Sheet = Source{[Item="Deals",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Deals_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"DealID", Int64.Type}, {"CustomerID", Int64.Type}, {"DealValue", type number}, {"DealStage", type text}, {"CreatedDate", type date}, {"ClosedDate", type date}, {"SalesOwner", type text}, {"Department", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

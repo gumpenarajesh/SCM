@@ -1,0 +1,123 @@
+table SupportTickets
+	lineageTag: 2a84fec4-980a-43ab-978c-22ee8035e496
+
+	column TicketID
+		dataType: string
+		lineageTag: 688ecc05-71b9-4397-a03f-abe6742c030c
+		summarizeBy: none
+		sourceColumn: TicketID
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerID
+		dataType: string
+		lineageTag: 866535c5-2602-4962-9871-54b8883e31f2
+		summarizeBy: none
+		sourceColumn: CustomerID
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 79b2296a-2fab-453f-aa55-3d63d0846a45
+		summarizeBy: none
+		sourceColumn: CreatedDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column ResolvedDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 7ce2796a-3ed1-47ad-815c-7c5c2c5a24df
+		summarizeBy: none
+		sourceColumn: ResolvedDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		lineageTag: 39c0a876-1b70-4346-825d-40ad5fb5143b
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: e8a55036-7da5-402f-b31b-6bb1a09218e6
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column SupportOwner
+		dataType: string
+		lineageTag: 55e72d5b-29ef-44bf-a353-ebe7f9b76fce
+		summarizeBy: none
+		sourceColumn: SupportOwner
+
+		annotation SummarizationSetBy = Automatic
+
+	column SatisfactionScore
+		dataType: int64
+		formatString: 0
+		lineageTag: 8fa37d64-75ad-41b4-84b5-5054a192054f
+		summarizeBy: sum
+		sourceColumn: SatisfactionScore
+
+		annotation SummarizationSetBy = Automatic
+
+	column FirstResponseDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 0413b953-7335-4938-8847-2e3b763fabda
+		summarizeBy: none
+		sourceColumn: FirstResponseDate
+
+		variation Variation
+			isDefault
+			relationship: 010535be-b153-452b-9449-db3f23b466f2
+			defaultHierarchy: LocalDateTable_725840cb-23e0-4f95-a98e-f04628658309.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column RegionID
+		dataType: string
+		lineageTag: 9c35e1a8-ae92-4f9e-b96c-e2fbe7349c9d
+		summarizeBy: none
+		sourceColumn: RegionID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Department
+		dataType: string
+		lineageTag: 2abeb5ed-9f2b-4845-9287-42a6eafedc99
+		summarizeBy: none
+		sourceColumn: Department
+
+		annotation SummarizationSetBy = Automatic
+
+	column DepartmentID
+		dataType: string
+		lineageTag: b924c805-cc8b-43e7-afcc-2c797180ee29
+		summarizeBy: none
+		sourceColumn: DepartmentID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition SupportTickets = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("\\Mac\Home\Documents\Power BI For Everyone\Course Presentation\Module 6 Data Viz\CRM Template\Data\CRM_Dashboard_WithRegionID.xlsx"), null, true),
+				    SupportTickets_Sheet = Source{[Item="SupportTickets",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(SupportTickets_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"TicketID", type text}, {"CustomerID", type text}, {"CreatedDate", type datetime}, {"FirstResponseDate", type datetime}, {"ResolvedDate", type datetime}, {"SatisfactionScore", Int64.Type}, {"SupportOwner", type text}, {"Status", type text}, {"Category", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

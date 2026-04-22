@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "Backlog"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "1d64247e-c62a-bd8b-412a-63b25a739451"
+  }
+}

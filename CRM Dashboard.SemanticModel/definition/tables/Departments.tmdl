@@ -1,0 +1,35 @@
+table Departments
+	lineageTag: 8aba51d3-6c4d-47ee-915d-904ada8653e1
+
+	column DepartmentID
+		dataType: int64
+		formatString: 0
+		lineageTag: d3f525dd-2514-42bf-9136-be7e2b1040d9
+		summarizeBy: none
+		sourceColumn: DepartmentID
+
+		annotation SummarizationSetBy = Automatic
+
+	column DepartmentName
+		dataType: string
+		lineageTag: 56a3b582-0bcb-4158-a4cc-548294128ee5
+		summarizeBy: none
+		sourceColumn: DepartmentName
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Departments = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("\\Mac\Home\Documents\Power BI For Everyone\Course Presentation\Module 6 Data Viz\CRM Template\Data\CRM_Dashboard_WithRegionID.xlsx"), null, true),
+				    Departments_Sheet = Source{[Item="Departments",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Departments_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"DepartmentID", Int64.Type}, {"DepartmentName", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

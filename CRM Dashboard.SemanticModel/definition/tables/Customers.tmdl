@@ -1,0 +1,125 @@
+table Customers
+	lineageTag: 293f06d1-2377-4388-931c-7d28cdda8393
+
+	column CustomerID
+		dataType: int64
+		formatString: 0
+		lineageTag: 7c72706e-7cce-4eca-a0eb-16ea5be626e5
+		summarizeBy: none
+		sourceColumn: CustomerID
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerName
+		dataType: string
+		lineageTag: 570fced4-8371-4dd4-b7f5-329ab38b9357
+		summarizeBy: none
+		sourceColumn: CustomerName
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerType
+		dataType: string
+		lineageTag: 88031b27-5484-44b0-9995-58bdf8f6fd8f
+		summarizeBy: none
+		sourceColumn: CustomerType
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: 995414a7-8f19-497a-8518-d78c5d524096
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		lineageTag: b5d470b8-0051-44fb-ba6c-574431874467
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	column SignupDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: b3ac9bb2-67f1-4a7d-b96c-d602fd6c3961
+		summarizeBy: none
+		sourceColumn: SignupDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ChurnDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: fd2e4409-20bb-43b2-abb9-9c6da9b58c4f
+		summarizeBy: none
+		sourceColumn: ChurnDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column IsActive
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 4e168492-fe44-4fa5-90e0-bf6236abb912
+		summarizeBy: none
+		sourceColumn: IsActive
+
+		annotation SummarizationSetBy = Automatic
+
+	column NPS
+		dataType: int64
+		formatString: 0
+		lineageTag: 42f024ea-43f2-4922-98c5-a0ca38943c40
+		summarizeBy: sum
+		sourceColumn: NPS
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerLifetimeValue
+		dataType: double
+		lineageTag: b2c98fc0-f586-445d-9f03-e78cdd277121
+		summarizeBy: sum
+		sourceColumn: CustomerLifetimeValue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column AcquisitionCampaignID
+		dataType: string
+		lineageTag: 7d7316b8-91ec-436e-b45d-aaa0ff76b19e
+		summarizeBy: none
+		sourceColumn: AcquisitionCampaignID
+
+		annotation SummarizationSetBy = Automatic
+
+	column FirstLeadID
+		dataType: string
+		lineageTag: 48d27c39-404b-4edc-8ea0-9ca95c91b901
+		summarizeBy: none
+		sourceColumn: FirstLeadID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Customers = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("\\Mac\Home\Documents\Power BI For Everyone\Course Presentation\Module 6 Data Viz\CRM Template\Data\CRM_Dashboard_WithRegionID.xlsx"), null, true),
+				    Customers_Sheet = Source{[Item="Customers",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Customers_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"CustomerID", Int64.Type}, {"CustomerName", type text}, {"CustomerType", type text}, {"Region", type text}, {"Country", type text}, {"SignupDate", type date}, {"ChurnDate", type date}, {"IsActive", type logical}, {"NPS", Int64.Type}, {"CustomerLifetimeValue", type number}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

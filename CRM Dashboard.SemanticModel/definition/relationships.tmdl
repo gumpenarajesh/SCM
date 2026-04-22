@@ -1,0 +1,126 @@
+relationship AutoDetected_cb7eadcd-10bf-4429-81d1-d2a542e40b2a
+	fromColumn: Deals.CustomerID
+	toColumn: Customers.CustomerID
+
+relationship AutoDetected_7d80f099-2d8a-4bf7-a45c-4b78e1841cd4
+	fromColumn: Revenue.CustomerID
+	toColumn: Customers.CustomerID
+
+relationship AutoDetected_2abd9cd5-eeef-4fe6-b2a7-826136aea6ee
+	fromColumn: SupportTickets.CustomerID
+	toColumn: Customers.CustomerID
+
+relationship 8cf49441-1d91-989f-9158-974663d1c916
+	fromColumn: Revenue.Date
+	toColumn: Date.Date
+
+relationship c932c071-3b8c-0885-265d-56781a12371f
+	fromColumn: Deals.CreatedDate
+	toColumn: Date.Date
+
+relationship a150d518-e891-a557-aaef-2ba4022e0ae2
+	isActive: false
+	fromColumn: Customers.SignupDate
+	toColumn: Date.Date
+
+relationship 062edf86-5003-69c3-e265-d7deb2a05de6
+	fromColumn: SupportTickets.CreatedDate
+	toColumn: Date.Date
+
+relationship defcf026-4ef5-fc34-5272-3d4a5439de99
+	isActive: false
+	fromColumn: Customers.ChurnDate
+	toColumn: Date.Date
+
+relationship 7357f6f8-b70a-e143-575e-688892511b55
+	isActive: false
+	fromColumn: SupportTickets.ResolvedDate
+	toColumn: Date.Date
+
+relationship 59a168f0-a7a6-4c86-07b8-f8e05c1ddc45
+	isActive: false
+	fromColumn: Deals.ClosedDate
+	toColumn: Date.Date
+
+relationship 010535be-b153-452b-9449-db3f23b466f2
+	joinOnDateBehavior: datePartOnly
+	fromColumn: SupportTickets.FirstResponseDate
+	toColumn: LocalDateTable_725840cb-23e0-4f95-a98e-f04628658309.Date
+
+relationship 1cc2a830-bd85-9628-8dc2-98005eb9a05d
+	fromColumn: Deals.RegionID
+	toColumn: Regions.RegionID
+
+relationship d62682fa-e530-c99c-f23d-b797fda64392
+	fromColumn: Revenue.RegionID
+	toColumn: Regions.RegionID
+
+relationship 3a907d12-0211-4274-36b9-353d2b1ecdd7
+	fromColumn: SupportTickets.RegionID
+	toColumn: Regions.RegionID
+
+relationship AutoDetected_e9fbcd21-c337-4e02-b8b3-fbbaeb8acfb1
+	fromColumn: Deals.Department
+	toColumn: Departments.DepartmentName
+
+relationship AutoDetected_4c847dea-b459-461b-a5f6-37d05c9229dd
+	fromColumn: SupportTickets.Department
+	toColumn: Departments.DepartmentName
+
+relationship 40d72e90-bb25-45aa-36e8-4a13c9203d2b
+	fromColumn: Deals.SalesRepID
+	toColumn: SalesReps.SalesRepID
+
+relationship b982e7e6-5d06-2849-457b-b0cf067350f9
+	fromColumn: Revenue.SalesRepID
+	toColumn: SalesReps.SalesRepID
+
+relationship e4da0129-1106-9b92-c60f-c63c8b416145
+	fromColumn: Revenue.DepartmentID
+	toColumn: Departments.DepartmentID
+
+relationship 13833e14-99fb-8cbf-b208-14752b319afc
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Forecast.Date
+	toColumn: Date.Date
+
+relationship d9a9facc-4785-4012-a410-857eacd2ae9c
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Campaigns.EndDate
+	toColumn: LocalDateTable_6a1371d1-d088-4b02-b202-153310584cac.Date
+
+relationship AutoDetected_bad95747-7ffb-405f-b8dc-ff492f1be8d2
+	fromColumn: Leads.CustomerID
+	toColumn: Customers.CustomerID
+
+relationship AutoDetected_fcd5e313-a70a-418c-8bbb-0de45c0b171c
+	fromColumn: Campaigns.RegionID
+	toColumn: Regions.RegionID
+
+relationship AutoDetected_a4dffadd-28fa-4e13-8a84-2382383a50e4
+	fromColumn: FactMarketingPerformance.CampaignID
+	toColumn: Campaigns.CampaignID
+
+relationship AutoDetected_07c9a35b-6c04-492d-a02f-002124460ad4
+	fromColumn: Leads.CampaignID
+	toColumn: Campaigns.CampaignID
+
+relationship a72f9c8d-fac7-c1ed-7224-bd98497bb382
+	fromColumn: Leads.CreatedDate
+	toColumn: Date.Date
+
+relationship cddf1650-8a54-9d02-50f4-39f399dddd3c
+	isActive: false
+	fromColumn: Leads.ConversionDate
+	toColumn: Date.Date
+
+relationship 8d73ed07-2208-c7d5-134f-c098038d9c04
+	fromColumn: FactMarketingPerformance.Date
+	toColumn: Date.Date
+
+relationship 7d045f8a-3e18-ffac-3d2e-9f751b3ffa36
+	isActive: false
+	fromColumn: Campaigns.StartDate
+	toColumn: Date.Date
+

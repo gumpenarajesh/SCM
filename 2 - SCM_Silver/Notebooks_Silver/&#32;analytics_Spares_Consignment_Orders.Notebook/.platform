@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": " analytics_Spares_Consignment_Orders"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "2dfda33f-9706-9731-421d-a93e395f8995"
+  }
+}

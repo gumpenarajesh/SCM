@@ -1,0 +1,124 @@
+table Date
+	lineageTag: 8478fe09-9c93-4fd8-a716-b2643c182f87
+	dataCategory: Time
+
+	column Date
+		dataType: dateTime
+		isKey
+		formatString: Long Date
+		lineageTag: 1cd1a62b-9bed-496e-bdd8-622a3f7f9b12
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 99af4cd7-490e-492d-8486-831bf4422fb0
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = User
+
+	column Month
+		dataType: int64
+		formatString: 0
+		lineageTag: c8f79986-3fd9-4c17-9ad4-75efe804e62c
+		summarizeBy: none
+		sourceColumn: Month
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = User
+
+	column 'Month Name'
+		dataType: string
+		lineageTag: d41f3c93-05fe-47bb-b92e-bfed470c99e3
+		summarizeBy: none
+		sourceColumn: Month Name
+		sortByColumn: Month
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: string
+		lineageTag: 38112149-7dcf-4b66-a4c8-7931db3fa962
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column Day
+		dataType: int64
+		formatString: 0
+		lineageTag: 6d997f55-a2e3-40ca-9552-cb9587b2f416
+		summarizeBy: sum
+		sourceColumn: Day
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day of Week'
+		dataType: int64
+		formatString: 0
+		lineageTag: d7d94036-f79c-4217-b675-e60a9b96d8c7
+		summarizeBy: sum
+		sourceColumn: Day of Week
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day of Week Name'
+		dataType: string
+		lineageTag: c283af3c-8224-48d3-9a0f-2efa8117c548
+		summarizeBy: none
+		sourceColumn: Day of Week Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Week of Year'
+		dataType: int64
+		formatString: 0
+		lineageTag: a5c6374f-abfe-4b7f-918c-3efa73bc8424
+		summarizeBy: sum
+		sourceColumn: Week of Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Is Weekend'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: a2890458-cb5c-46de-86a3-c1ef9d75be77
+		summarizeBy: none
+		sourceColumn: Is Weekend
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Date = m
+		mode: import
+		source =
+				let
+				    StartDate = #date(2020, 1, 1),
+				    EndDate = #date(2030, 12, 31),
+				    DateList = List.Dates(StartDate, Duration.Days(EndDate - StartDate) + 1, #duration(1, 0, 0, 0)),
+				    DateTable = Table.FromList(DateList, Splitter.SplitByNothing(), {"Date"}),
+				    AddYear = Table.AddColumn(DateTable, "Year", each Date.Year([Date]), Int64.Type),
+				    AddMonth = Table.AddColumn(AddYear, "Month", each Date.Month([Date]), Int64.Type),
+				    AddMonthName = Table.AddColumn(AddMonth, "Month Name", each Date.ToText([Date], "MMMM")),
+				    AddQuarter = Table.AddColumn(AddMonthName, "Quarter", each "Q" & Text.From(Date.QuarterOfYear([Date]))),
+				    AddDay = Table.AddColumn(AddQuarter, "Day", each Date.Day([Date]), Int64.Type),
+				    AddDayOfWeek = Table.AddColumn(AddDay, "Day of Week", each Date.DayOfWeek([Date]), Int64.Type),
+				    AddDayOfWeekName = Table.AddColumn(AddDayOfWeek, "Day of Week Name", each Date.ToText([Date], "dddd")),
+				    AddWeekOfYear = Table.AddColumn(AddDayOfWeekName, "Week of Year", each Date.WeekOfYear([Date]), Int64.Type),
+				    AddIsWeekend = Table.AddColumn(AddWeekOfYear, "Is Weekend", each if Date.DayOfWeek([Date]) >= 5 then true else false, type logical),
+				    #"Changed Type" = Table.TransformColumnTypes(AddIsWeekend,{{"Date", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

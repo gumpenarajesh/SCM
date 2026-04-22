@@ -1,0 +1,35 @@
+table SalesReps
+	lineageTag: f1fe86e3-7863-412f-a47d-1e7cee468895
+
+	column SalesRepID
+		dataType: int64
+		formatString: 0
+		lineageTag: 0d774c23-aa05-4d3a-a307-f7acd7b983b3
+		summarizeBy: none
+		sourceColumn: SalesRepID
+
+		annotation SummarizationSetBy = Automatic
+
+	column SalesOwner
+		dataType: string
+		lineageTag: aca2ce63-7d4c-4789-955e-4133522bc357
+		summarizeBy: none
+		sourceColumn: SalesOwner
+
+		annotation SummarizationSetBy = Automatic
+
+	partition SalesReps = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("\\Mac\Home\Documents\Power BI For Everyone\Course Presentation\Module 6 Data Viz\CRM Template\Data\CRM_Dashboard_WithRegionID.xlsx"), null, true),
+				    SalesReps_Sheet = Source{[Item="SalesReps",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(SalesReps_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"SalesRepID", Int64.Type}, {"SalesOwner", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

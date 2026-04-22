@@ -1,0 +1,72 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "ff815b2e31fbbae26065",
+  "position": {
+    "x": 8.9642184557438789,
+    "y": 446.93032015065916,
+    "z": 35005,
+    "height": 69.152542372881356,
+    "width": 172.88135593220338,
+    "tabOrder": 35005
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "analytics purchasing_document"
+                    }
+                  },
+                  "Property": "Plant"
+                }
+              },
+              "queryRef": "analytics purchasing_document.Plant",
+              "nativeQueryRef": "Plant",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "data": [
+        {
+          "properties": {
+            "mode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Dropdown'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "33f8c6592c280becf3e2",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "analytics purchasing_document"
+              }
+            },
+            "Property": "Plant"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
+  }
+}

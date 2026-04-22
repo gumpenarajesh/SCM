@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "Notebook_calendar_update"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "d678d241-5f91-80c7-47fd-e8080e31ceaa"
+  }
+}

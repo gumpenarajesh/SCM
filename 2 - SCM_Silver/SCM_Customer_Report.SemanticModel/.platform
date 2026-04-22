@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "SCM_Customer_Report"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "382171ef-e722-bb45-4d8d-b5970db3bc26"
+  }
+}

@@ -1,0 +1,44 @@
+relationship 2106996d-bc1c-6548-6269-88154bbe1a25
+	fromColumn: 'analytics current_stock'.Material
+	toColumn: 'analytics inventory_kpi_final'.Material
+
+relationship 4be8d7b1-7145-b79d-0fab-ee9df76b897e
+	fromColumn: 'analytics delivery_time_audit'.Material
+	toColumn: 'analytics inventory_kpi_final'.Material
+
+relationship ba7f3cee-5ca0-bb0e-4271-5137a04e638d
+	fromColumn: 'analytics purchasing_document'.Material
+	toColumn: 'analytics inventory_kpi_final'.Material
+
+relationship 30f0db27-4ce8-94ff-cdb9-318f1565eb88
+	fromColumn: 'analytics stock_movement'.Material
+	toColumn: 'analytics inventory_kpi_final'.Material
+
+relationship ef094be6-db17-dc90-a9ff-3406cab0ede2
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: 'analytics inventory_kpi_final'.Plant
+	toColumn: 'analytics current_stock'.Plant
+
+relationship 0a516c40-7bf9-7354-d35c-c13ccf7dfd24
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: 'analytics inventory_kpi_final'.Plant
+	toColumn: 'analytics delivery_time_audit'.Plant
+
+relationship 05e3ecf2-57a1-8fd2-d10f-203440766dd6
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: 'analytics inventory_kpi_final'.Plant
+	toColumn: 'analytics purchasing_document'.Plant
+
+relationship 8792c5ce-4be0-0007-5e03-d05ea3ae3f70
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: 'analytics inventory_kpi_final'.Plant
+	toColumn: 'analytics stock_movement'.Plant
+

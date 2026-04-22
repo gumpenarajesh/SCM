@@ -1,0 +1,126 @@
+table Campaigns
+	lineageTag: 5248229f-e98e-4d07-ac60-4fb8fecf752c
+
+	measure 'Camp Budget Spend Var' = [Actual Spend] - [Total Budget]
+		formatString: 0
+		lineageTag: b4cabc3e-4792-4af9-8b05-2c9e2eb0eed3
+
+	column CampaignID
+		dataType: string
+		lineageTag: cf3d4983-e0c6-4e7b-8ef0-806d9db3e80e
+		summarizeBy: none
+		sourceColumn: CampaignID
+
+		annotation SummarizationSetBy = Automatic
+
+	column CampaignName
+		dataType: string
+		lineageTag: ab64daed-7374-4b80-9966-fa788f3dd4a0
+		summarizeBy: none
+		sourceColumn: CampaignName
+
+		annotation SummarizationSetBy = Automatic
+
+	column StartDate
+		dataType: dateTime
+		formatString: m/d/yy
+		lineageTag: 4e8b9a13-b220-4474-863d-32b9cd09dd4c
+		summarizeBy: none
+		sourceColumn: StartDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column EndDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 1f5f7f91-2721-4268-8f74-0f05fd944abf
+		summarizeBy: none
+		sourceColumn: EndDate
+
+		variation Variation
+			isDefault
+			relationship: d9a9facc-4785-4012-a410-857eacd2ae9c
+			defaultHierarchy: LocalDateTable_6a1371d1-d088-4b02-b202-153310584cac.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Status
+		dataType: string
+		lineageTag: f8dcdee6-0c01-48a8-8ee3-534cc69736e2
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column Type
+		dataType: string
+		lineageTag: 77666874-66f7-47d5-a84b-a220e22f0baa
+		summarizeBy: none
+		sourceColumn: Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Channel
+		dataType: string
+		lineageTag: 5080aa45-7a7e-4ccc-bd71-fab60fe4bdca
+		summarizeBy: none
+		sourceColumn: Channel
+
+		annotation SummarizationSetBy = Automatic
+
+	column Budget
+		dataType: int64
+		formatString: 0
+		lineageTag: 64791dae-3f85-4dbf-843f-c51f75e4594d
+		summarizeBy: sum
+		sourceColumn: Budget
+
+		annotation SummarizationSetBy = Automatic
+
+	column Spend
+		dataType: int64
+		formatString: 0
+		lineageTag: b8a99e74-fd65-4cdf-b88b-f53ab5f73205
+		summarizeBy: sum
+		sourceColumn: Spend
+
+		annotation SummarizationSetBy = Automatic
+
+	column RegionID
+		dataType: int64
+		formatString: 0
+		lineageTag: b9d5b60e-5ede-416b-aa3f-7fcdff2108e8
+		summarizeBy: none
+		sourceColumn: RegionID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Platform
+		dataType: string
+		lineageTag: 3187cd6b-e2b6-49cd-8059-40880073b3bd
+		summarizeBy: none
+		sourceColumn: Platform
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Campaigns = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("\\Mac\Home\Documents\Power BI For Everyone\Course Presentation\Module 6 Data Viz\CRM Template\Data\CRM_Dashboard_WithRegionID.xlsx"), null, true),
+				    Campaigns_Sheet = Source{[Item="Campaigns",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Campaigns_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"CampaignID", type text}, {"CampaignName", type text}, {"StartDate", type date}, {"EndDate", type date}, {"Status", type text}, {"Type", type text}, {"Channel", type text}, {"Budget", Int64.Type}, {"Spend", Int64.Type}, {"RegionID", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

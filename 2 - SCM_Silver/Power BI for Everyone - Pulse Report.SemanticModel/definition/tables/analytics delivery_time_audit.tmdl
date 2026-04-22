@@ -1,0 +1,171 @@
+table 'analytics delivery_time_audit'
+	lineageTag: 27b7b3aa-8fd1-445d-8046-0d3ff49d5a04
+
+	column SalesDocument
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: d2c5a21c-644c-480c-bd09-0a2f470c0058
+		summarizeBy: none
+		sourceColumn: SalesDocument
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerName
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 8e6e0265-1f88-43fd-91ad-7f0ad26a0c3e
+		summarizeBy: none
+		sourceColumn: CustomerName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Material_Description
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 7958205d-1117-4892-a708-0cc944a45f72
+		summarizeBy: none
+		sourceColumn: Material_Description
+
+		annotation SummarizationSetBy = Automatic
+
+	column Material
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 76b453af-a3f4-4e7a-817f-77c1dd61dd50
+		summarizeBy: none
+		sourceColumn: Material
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product_Group
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 7ce696fb-a641-452b-bbb0-ff87280e0bc2
+		summarizeBy: none
+		sourceColumn: Product_Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column Item
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: ed683a9b-ea56-4346-bb9b-cc68954948f2
+		summarizeBy: none
+		sourceColumn: Item
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ordered_Qty
+		dataType: double
+		sourceProviderType: decimal(15, 2)
+		lineageTag: 2663e6d9-9918-4a78-b72c-de25eb2ec94b
+		summarizeBy: sum
+		sourceColumn: Ordered_Qty
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Created_On
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: ee98403e-5f4d-42ab-b950-23e2e42b9655
+		summarizeBy: none
+		sourceColumn: Created_On
+
+		annotation SummarizationSetBy = Automatic
+
+	column Delivery_Number
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: b2f7244d-0e65-4476-b45d-e0ee1acb7bda
+		summarizeBy: none
+		sourceColumn: Delivery_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sold-to_Party
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: dec57f6c-0f71-4283-abdf-d7cb424a48fa
+		summarizeBy: none
+		sourceColumn: Sold-to_Party
+
+		annotation SummarizationSetBy = Automatic
+
+	column Plant
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 2b6b0a80-83a0-4065-9e2e-8e2ab4ee82a0
+		summarizeBy: none
+		sourceColumn: Plant
+
+		annotation SummarizationSetBy = Automatic
+
+	column Del_Date
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 59c0d594-4f85-4edb-b5bf-745971b1062a
+		summarizeBy: none
+		sourceColumn: Del_Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Posting_Date
+		dataType: dateTime
+		formatString: Long Date
+		sourceProviderType: date
+		lineageTag: 9fb0a80b-e6d7-43de-b1b5-e7152efc1bb3
+		summarizeBy: none
+		sourceColumn: Posting_Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column PickOnTime
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 4e5425eb-fe11-4fd9-bb6e-99bc50889ed5
+		summarizeBy: none
+		sourceColumn: PickOnTime
+
+		annotation SummarizationSetBy = Automatic
+
+	column GI_Days
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 6d9bb69e-979f-47cb-8a14-f7d2efbf9a37
+		summarizeBy: sum
+		sourceColumn: GI_Days
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sales_Org
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: de133efa-9058-45d2-8b77-130680f1fbf2
+		summarizeBy: none
+		sourceColumn: Sales_Org
+
+		annotation SummarizationSetBy = Automatic
+
+	column INTEGRATION_ID
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 4589fe9e-08eb-4aa3-95c4-760d7276ea05
+		summarizeBy: none
+		sourceColumn: INTEGRATION_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'analytics delivery_time_audit' = m
+		mode: directQuery
+		source =
+				let
+				    Source = Sql.Database("ecs2ceyl3h7exlnafpr5d46fqi-gd7o55xabh6ufod5wszxfqw6pi.datawarehouse.fabric.microsoft.com", "SCM_Silver_LH"),
+				    analytics_delivery_time_audit = Source{[Schema="analytics",Item="delivery_time_audit"]}[Data]
+				in
+				    analytics_delivery_time_audit
+

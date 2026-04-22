@@ -1,0 +1,35 @@
+table 'Revenue Change Drivers'
+	lineageTag: 57fcced8-7f7b-4fa0-bf06-6d9a41609c4e
+
+	column Category
+		lineageTag: d7d01140-f1bf-4a25-b21a-6328d5817d62
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Category]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Amount
+		lineageTag: 4970e3ff-93a2-47d1-ac33-7954830ab1cb
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Amount]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'Revenue Change Drivers' = calculated
+		mode: import
+		source = ```
+				
+				UNION(
+				    ROW("Category", "New Customers", "Amount", [New Revenue]),
+				    ROW("Category", "Upsell Revenue", "Amount", [Upsell Revenue]),
+				    ROW("Category", "Churned Customers", "Amount", - [Churned Revenue])
+				)
+				
+				```
+
+	annotation PBI_Id = 118b22c3ac8e44db9b59d5bfb898b18e
+

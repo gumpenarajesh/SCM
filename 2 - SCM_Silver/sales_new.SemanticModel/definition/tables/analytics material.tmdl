@@ -1,0 +1,415 @@
+table 'analytics material'
+	lineageTag: b957263c-19fb-4661-b655-7002014ad103
+
+	column Material
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 54696923-a08c-4b7b-81b8-8bcb5f4907a6
+		summarizeBy: none
+		sourceColumn: Material
+
+		annotation SummarizationSetBy = Automatic
+
+	column Material_Text
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 2554c843-54e8-4bba-8d5e-ed2c02777fe7
+		summarizeBy: none
+		sourceColumn: Material_Text
+
+		annotation SummarizationSetBy = Automatic
+
+	column Created_On
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: d37aa549-a9e5-4b97-81ff-2b6c8bb91426
+		summarizeBy: none
+		sourceColumn: Created_On
+
+		annotation SummarizationSetBy = Automatic
+
+	column Created_by
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: c49f2518-81f8-4df9-96a0-3622d5328c66
+		summarizeBy: none
+		sourceColumn: Created_by
+
+		annotation SummarizationSetBy = Automatic
+
+	column Last_Change
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 817ad991-9cfc-4128-8015-d9ea8ca027d5
+		summarizeBy: none
+		sourceColumn: Last_Change
+
+		annotation SummarizationSetBy = Automatic
+
+	column Changed_by
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 5867f61c-43de-4f69-a017-4e2772f03ebd
+		summarizeBy: none
+		sourceColumn: Changed_by
+
+		annotation SummarizationSetBy = Automatic
+
+	column Complete_status
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 03bf6539-462d-49f0-b9d5-63c25de31bee
+		summarizeBy: none
+		sourceColumn: Complete_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column Maint_status
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 53d64c35-821d-4f86-8ddb-c4d5eac0105e
+		summarizeBy: none
+		sourceColumn: Maint_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column DF_client_level
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: b7a44085-b5fe-493a-bf21-ddcf5a14eeaa
+		summarizeBy: none
+		sourceColumn: DF_client_level
+
+		annotation SummarizationSetBy = Automatic
+
+	column Material_Type
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: d32c356e-09cc-42bb-a0cd-fc2157d3d129
+		summarizeBy: none
+		sourceColumn: Material_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Material_Type_Text
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 579ff5ae-3400-4b99-9cc7-707fd49da724
+		summarizeBy: none
+		sourceColumn: Material_Type_Text
+
+		annotation SummarizationSetBy = Automatic
+
+	column Material_Group
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: c22a3515-3de1-4094-acca-8318403ffc72
+		summarizeBy: none
+		sourceColumn: Material_Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column Material_Group_Text
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: aecec30f-21e8-4465-8b09-84a60a41f480
+		summarizeBy: none
+		sourceColumn: Material_Group_Text
+
+		annotation SummarizationSetBy = Automatic
+
+	column Base_Unit
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 2a256fef-f180-46a7-9a0f-21c44c8c84b7
+		summarizeBy: none
+		sourceColumn: Base_Unit
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gross_Weight
+		dataType: double
+		sourceProviderType: decimal(13, 3)
+		lineageTag: 3ce79631-8c43-4363-a46b-a28c12f081f7
+		summarizeBy: sum
+		sourceColumn: Gross_Weight
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Net_Weight
+		dataType: double
+		sourceProviderType: decimal(13, 3)
+		lineageTag: 9dd8cf32-0bff-4c94-ac57-cbf972a04817
+		summarizeBy: sum
+		sourceColumn: Net_Weight
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Weight_unit
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 2c84ed8b-71c5-488c-91f7-c56af83115da
+		summarizeBy: none
+		sourceColumn: Weight_unit
+
+		annotation SummarizationSetBy = Automatic
+
+	column Volume
+		dataType: double
+		sourceProviderType: decimal(13, 3)
+		lineageTag: 55e653bf-3e55-4330-9751-459533a5ae25
+		summarizeBy: sum
+		sourceColumn: Volume
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Volume_unit
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 886ea07b-040c-497b-8250-b13fdfb4e179
+		summarizeBy: none
+		sourceColumn: Volume_unit
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product_Hierarchy
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 0ecbd308-44e0-4b1e-9fec-710d290a4b78
+		summarizeBy: none
+		sourceColumn: Product_Hierarchy
+
+		annotation SummarizationSetBy = Automatic
+
+	column Haz_Material_Text
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 4d1d7a74-9205-42ed-affe-ce20d3536ba8
+		summarizeBy: none
+		sourceColumn: Haz_Material_Text
+
+		annotation SummarizationSetBy = Automatic
+
+	column Storage_Class
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: d9d6c2e1-d069-40d8-956f-4b8a213dfff6
+		summarizeBy: none
+		sourceColumn: Storage_Class
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hazard_Warning
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: ad515da4-8da5-435c-9b50-d260abf53864
+		summarizeBy: none
+		sourceColumn: Hazard_Warning
+
+		annotation SummarizationSetBy = Automatic
+
+	column Old_matl_number
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 83126c51-6d11-403b-925f-9f69cad8cc0e
+		summarizeBy: none
+		sourceColumn: Old_matl_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tradename
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 4f5e6ea5-a7b4-4721-895f-8b09e9421f8d
+		summarizeBy: none
+		sourceColumn: Tradename
+
+		annotation SummarizationSetBy = Automatic
+
+	column Article_Type
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 4ab7b783-7c02-4a16-b0ea-118aca5c357d
+		summarizeBy: none
+		sourceColumn: Article_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Article_Type_Text
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 820888f4-3527-4581-ae19-8e3ed209e0df
+		summarizeBy: none
+		sourceColumn: Article_Type_Text
+
+		annotation SummarizationSetBy = Automatic
+
+	column Container
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 302aca18-d275-4d1d-a467-7b574547e882
+		summarizeBy: none
+		sourceColumn: Container
+
+		annotation SummarizationSetBy = Automatic
+
+	column Temperature
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: f29c2725-0cf1-488d-be45-1711e9013d6f
+		summarizeBy: none
+		sourceColumn: Temperature
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product_group
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 7ce6204e-32ce-4c0f-849b-ea616c5c6969
+		summarizeBy: none
+		sourceColumn: Product_group
+
+		annotation SummarizationSetBy = Automatic
+
+	column EAN_UPC
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: e9143f69-fb8f-4212-bf27-e8a7295abe91
+		summarizeBy: none
+		sourceColumn: EAN_UPC
+
+		annotation SummarizationSetBy = Automatic
+
+	column EAN_Category
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 2674740f-3b96-4760-958b-2c9384cfb632
+		summarizeBy: none
+		sourceColumn: EAN_Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column Length
+		dataType: double
+		sourceProviderType: decimal(13, 3)
+		lineageTag: e036a04c-c5d9-43c3-8635-c85d2651c31b
+		summarizeBy: sum
+		sourceColumn: Length
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Width
+		dataType: double
+		sourceProviderType: decimal(13, 3)
+		lineageTag: 64c9fcd0-80f7-4b59-8793-d0fed80a6c96
+		summarizeBy: sum
+		sourceColumn: Width
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Height
+		dataType: double
+		sourceProviderType: decimal(13, 3)
+		lineageTag: f8d59be6-7468-4a01-8ea0-28c5673137a3
+		summarizeBy: sum
+		sourceColumn: Height
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Unit
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 57c2dcdc-68c5-4cef-bb1a-d1568b00bbe6
+		summarizeBy: none
+		sourceColumn: Unit
+
+		annotation SummarizationSetBy = Automatic
+
+	column BatchManagement
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 550c1e06-1e37-4d54-ac3a-304e64f3f2da
+		summarizeBy: none
+		sourceColumn: BatchManagement
+
+		annotation SummarizationSetBy = Automatic
+
+	column AuthorizGroup
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 91fcbadd-67a6-430b-8038-20fcf3da83a3
+		summarizeBy: none
+		sourceColumn: AuthorizGroup
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ext_Matl_Group
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 81763117-b86f-424f-984a-fcdf7b5e50a2
+		summarizeBy: none
+		sourceColumn: Ext_Matl_Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ext_Matl_Group_Text
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 98b446bc-b5e5-4324-abcc-41daa3dda0c1
+		summarizeBy: none
+		sourceColumn: Ext_Matl_Group_Text
+
+		annotation SummarizationSetBy = Automatic
+
+	column Rem_Shelf_life
+		dataType: double
+		sourceProviderType: decimal(4, 0)
+		lineageTag: 740ceaeb-6f4e-413f-ba29-e1a05309e1e9
+		summarizeBy: sum
+		sourceColumn: Rem_Shelf_life
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Period_Ind
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 7a62c002-3896-400c-9845-27b6f3185b89
+		summarizeBy: none
+		sourceColumn: Period_Ind
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tot_shelf_life
+		dataType: double
+		sourceProviderType: decimal(4, 0)
+		lineageTag: 382ce549-aa9a-4971-b28f-be0856d49ce9
+		summarizeBy: sum
+		sourceColumn: Tot_shelf_life
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'analytics material' = m
+		mode: directQuery
+		source =
+				let
+				    Source = Sql.Database("ecs2ceyl3h7exlnafpr5d46fqi-gd7o55xabh6ufod5wszxfqw6pi.datawarehouse.fabric.microsoft.com", "SCM_Silver_LH"),
+				    analytics_material = Source{[Schema="analytics",Item="material"]}[Data]
+				in
+				    analytics_material
+

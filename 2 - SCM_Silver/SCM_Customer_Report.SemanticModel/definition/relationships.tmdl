@@ -1,0 +1,12 @@
+relationship 5a3d3206-27af-5cc8-39e8-b887ff0449a3
+	fromColumn: customer.Customer
+	toColumn: customer_audit.Customer
+
+relationship 57d3c1fa-cbd7-53f5-e7b9-4536c17137a0
+	fromColumn: customer.Customer
+	toColumn: customer_hierarchies.Customer
+
+relationship 993020e9-1578-9278-63e4-0697462dda99
+	fromColumn: customer_sales_org_sales_rep.Customer
+	toColumn: customer.Customer
+

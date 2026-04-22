@@ -1,0 +1,163 @@
+table FactMarketingPerformance
+	lineageTag: 665fb697-2f96-4931-8f32-76fb187ce3b7
+
+	column CampaignID
+		dataType: string
+		lineageTag: 8e10e9bc-c507-4d20-97e6-e5a8018b2531
+		summarizeBy: none
+		sourceColumn: CampaignID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 42bb923c-6767-40c1-bac1-a2f5bce7495d
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column LeadsGenerated
+		dataType: int64
+		formatString: 0
+		lineageTag: 1b04f2e2-98f5-400a-9e50-b49db1f7bd88
+		summarizeBy: sum
+		sourceColumn: LeadsGenerated
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomersAcquired
+		dataType: int64
+		formatString: 0
+		lineageTag: 1b3e71e5-5000-40d4-8072-700f09fe99fe
+		summarizeBy: sum
+		sourceColumn: CustomersAcquired
+
+		annotation SummarizationSetBy = Automatic
+
+	column RevenueGenerated
+		dataType: int64
+		formatString: 0
+		lineageTag: 7980b8e8-79de-4006-acf2-d86493e6071b
+		summarizeBy: sum
+		sourceColumn: RevenueGenerated
+
+		annotation SummarizationSetBy = Automatic
+
+	column Impressions
+		dataType: int64
+		formatString: 0
+		lineageTag: 89fb98f6-285a-4ee6-ad05-b507c24cac61
+		summarizeBy: sum
+		sourceColumn: Impressions
+
+		annotation SummarizationSetBy = Automatic
+
+	column Clicks
+		dataType: int64
+		formatString: 0
+		lineageTag: 56c1db2d-c626-4a49-9d2c-ce6e7e5095a3
+		summarizeBy: sum
+		sourceColumn: Clicks
+
+		annotation SummarizationSetBy = Automatic
+
+	column Visitors
+		dataType: int64
+		formatString: 0
+		lineageTag: 2e7d29e4-242f-4d38-a8b1-709597fd7462
+		summarizeBy: sum
+		sourceColumn: Visitors
+
+		annotation SummarizationSetBy = Automatic
+
+	column EmailsSent
+		dataType: int64
+		formatString: 0
+		lineageTag: 10640078-d794-4cc2-b4aa-9de9e124c864
+		summarizeBy: sum
+		sourceColumn: EmailsSent
+
+		annotation SummarizationSetBy = Automatic
+
+	column Opens
+		dataType: int64
+		formatString: 0
+		lineageTag: 0db13689-c395-4e2c-b424-dc2bdc1fc809
+		summarizeBy: sum
+		sourceColumn: Opens
+
+		annotation SummarizationSetBy = Automatic
+
+	column Clicks_Email
+		dataType: int64
+		formatString: 0
+		lineageTag: 18a14927-0eaf-4967-9ec0-c4b1f2368e34
+		summarizeBy: sum
+		sourceColumn: Clicks_Email
+
+		annotation SummarizationSetBy = Automatic
+
+	column Unsubscribes
+		dataType: int64
+		formatString: 0
+		lineageTag: 72c9a9b1-4d7f-42f2-adf7-500af8d253e6
+		summarizeBy: sum
+		sourceColumn: Unsubscribes
+
+		annotation SummarizationSetBy = Automatic
+
+	column Likes
+		dataType: int64
+		formatString: 0
+		lineageTag: 7d26e4fe-233d-4e3f-87fd-b31fe7ff5df0
+		summarizeBy: sum
+		sourceColumn: Likes
+
+		annotation SummarizationSetBy = Automatic
+
+	column Comments
+		dataType: int64
+		formatString: 0
+		lineageTag: 83236b4d-01f9-4f3a-bee9-e405ceac02ee
+		summarizeBy: sum
+		sourceColumn: Comments
+
+		annotation SummarizationSetBy = Automatic
+
+	column Shares
+		dataType: int64
+		formatString: 0
+		lineageTag: 601d2ed7-6111-4096-893f-ced944547b79
+		summarizeBy: sum
+		sourceColumn: Shares
+
+		annotation SummarizationSetBy = Automatic
+
+	column Followers
+		dataType: int64
+		formatString: 0
+		lineageTag: e3d93277-2396-4e79-8046-842e432c043b
+		summarizeBy: sum
+		sourceColumn: Followers
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactMarketingPerformance = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("\\Mac\Home\Documents\Power BI For Everyone\Course Presentation\Module 6 Data Viz\CRM Template\Data\CRM_Dashboard_WithRegionID.xlsx"), null, true),
+				    FactMarketingPerformance_Sheet = Source{[Item="FactMarketingPerformance",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(FactMarketingPerformance_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"CampaignID", type text}, {"Date", type date}, {"LeadsGenerated", Int64.Type}, {"CustomersAcquired", Int64.Type}, {"RevenueGenerated", Int64.Type}, {"Impressions", Int64.Type}, {"Clicks", Int64.Type}, {"Visitors", Int64.Type}, {"EmailsSent", Int64.Type}, {"Opens", Int64.Type}, {"Clicks_Email", Int64.Type}, {"Unsubscribes", Int64.Type}, {"Likes", Int64.Type}, {"Comments", Int64.Type}, {"Shares", Int64.Type}, {"Followers", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,704 @@
+table 'Crm Calculations'
+	lineageTag: ae48f593-9eea-4e3f-a498-7ba3649e0ab1
+
+	measure 'Total Customers' =
+			
+			CALCULATE(DISTINCTCOUNT(Customers[CustomerID]) , USERELATIONSHIP(Customers[SignupDate],'Date'[Date]))
+		formatString: 0
+		lineageTag: 66a347f2-0c35-45a2-bfe1-f116d3da2f76
+
+	measure 'Monthly Recurring Revenue (MRR)' =
+			
+			CALCULATE(
+			    SUM(Revenue[RevenueAmount]),
+			    DATESMTD('Date'[Date])
+			)
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 1fa94096-f2d9-4cbc-9d49-0a0a70b55983
+
+	measure 'Active Customers This Month' =
+			
+			CALCULATE(
+			    COUNTROWS(Customers),
+			    Customers[IsActive] = TRUE()
+			)
+		formatString: 0
+		lineageTag: 907ccfe5-08d1-47d6-8d16-e8b9fd627903
+
+	measure 'Net Promoter Score (NPS)' =
+			
+			AVERAGE(Customers[NPS])
+		lineageTag: 3b48860d-4629-4a74-a895-04d455fb60a7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Churned Customers (by Churn Date)' =
+			
+			CALCULATE(
+			    COUNTROWS(Customers),
+			    NOT(ISBLANK(Customers[ChurnDate])),
+			    USERELATIONSHIP('Date'[Date], Customers[ChurnDate])
+			)
+		formatString: 0
+		lineageTag: c28beaae-9509-4e63-9dbc-363164c39c45
+
+	measure 'Customer Churn Rate (%)' =
+			
+			DIVIDE([Churned Customers (by Churn Date)], [Total Customers])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 966c73e3-0f1d-4257-88ec-fe1b0239cbbc
+
+	measure 'Average Deal Size' =
+			
+			AVERAGE(Deals[DealValue])
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: ead3e52e-16bd-48dd-91a8-e2d59efff38c
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Total Revenue' =
+			
+			SUM(Revenue[RevenueAmount])
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 8db4665c-3469-4e80-9f31-3eb383098aac
+
+	measure 'Revenue Growth %' =
+			
+			VAR _Current = [Total Revenue]
+			VAR Prev = CALCULATE([Total Revenue], DATEADD('Date'[Date], -1, MONTH))
+			RETURN DIVIDE(_Current - Prev, Prev)
+		lineageTag: 0c48c2d5-3a38-4c92-852b-3a31a7d7ba6f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Revenue by Customer Type' =
+			
+			CALCULATE(
+			    [Total Revenue],
+			    ALLEXCEPT(Customers, Customers[CustomerType])
+			)
+		lineageTag: a4301626-8479-44f1-91f1-6aad34fc3eee
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Revenue from New Customers' =
+			
+			CALCULATE(
+			    [Total Revenue],
+			    USERELATIONSHIP('Date'[Date], Customers[SignupDate])
+			)
+		lineageTag: a213d4a5-6916-4921-8490-daa79fef8fa3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Revenue from Churned Customers' =
+			
+			CALCULATE(
+			    [Total Revenue],
+			    USERELATIONSHIP('Date'[Date], Customers[ChurnDate])
+			)
+		lineageTag: 47cf633e-7e0c-42fc-b6e6-8719af1f9095
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Revenue from Existing Customers' =
+			
+			[Total Revenue] - [Revenue from New Customers] - [Revenue from Churned Customers]
+		lineageTag: 26b5a3c4-6226-4917-ae68-ef599caf6dac
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'New Customers This Month' =
+			
+			CALCULATE(
+			    COUNTROWS(Customers),
+			    USERELATIONSHIP('Date'[Date], Customers[SignupDate])
+			)
+		formatString: 0
+		lineageTag: 89a72fd8-f99a-4625-bbf1-8bc01e30e448
+
+	measure 'Auto Summary Text' =
+			
+			"This month, revenue grew by " &
+			FORMAT([Revenue Growth %], "0.0%") &
+			" driven by " &
+			[New Customers This Month] &
+			" new customers and increased upsells. However, churn slightly increased to " &
+			FORMAT([Customer Churn Rate (%)], "0.0%") & "."
+		lineageTag: 11787af7-cebc-44f2-b1d1-8bb5800cac65
+
+	measure 'Customer Satisfaction Score' =
+			
+			AVERAGE(SupportTickets[SatisfactionScore])
+		lineageTag: 411e6dee-71a3-4d1f-999a-b4e0d0baa43d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Avg Ticket Resolution Time (in Days)' =
+			
+			AVERAGEX(
+			    SupportTickets,
+			    DATEDIFF(SupportTickets[CreatedDate], SupportTickets[ResolvedDate], DAY)
+			)
+		lineageTag: a6937221-86bf-46c5-a066-0f23e2e494da
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Closed Won Deals' =
+			
+			CALCULATE(
+			    COUNTROWS(Deals),
+			    Deals[DealStage] = "Closed Won"
+			)
+		formatString: 0
+		lineageTag: 7ca1c263-45da-4890-a77b-99f51fbd960d
+
+	measure 'Total Deals' =
+			
+			COUNTROWS(Deals)
+		formatString: 0
+		lineageTag: 0dd2503b-c32c-4601-b6b9-280078541a83
+
+	measure 'Win Rate (%)' =
+			
+			DIVIDE([Closed Won Deals], [Total Deals])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 021e3fa9-e483-43c4-bea0-13c1f69064e9
+
+	measure 'Customer Lifetime Value (Avg)' =
+			
+			AVERAGE(Customers[CustomerLifetimeValue])
+		lineageTag: 4f43fe23-f068-49da-aa17-8154c6e01e47
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Retention Rate (%)' =
+			
+			1 - [Customer Churn Rate (%)]
+		lineageTag: 513e6248-d668-498a-adfc-01ee91866184
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Avg Response Time (in Hours)' = ```
+			
+			AVERAGEX(
+			    SupportTickets,
+			    DATEDIFF(SupportTickets[CreatedDate], SupportTickets[FirstResponseDate], HOUR)
+			)
+			
+			```
+		lineageTag: dff317aa-b2b2-4631-a5ee-664103709884
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Deals (Previous Month)' = ```
+			
+			CALCULATE(
+			    [Total Deals],
+			    DATEADD('Date'[Date], -1, MONTH)
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 0175ee7f-4962-49a4-b2e4-6654d926fe02
+
+	measure 'Total Tickets' = COUNTROWS(SupportTickets)
+		formatString: 0
+		lineageTag: d799a146-b069-4cfc-90f9-9d950bc43e58
+
+	measure 'Revenue This Month' = ```
+			
+			CALCULATE(
+			    [Total Revenue],
+			    DATESMTD('Date'[Date])
+			)
+			
+			```
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 349f57a0-3df3-453e-aae3-1be3e13f4d04
+
+	measure 'YOY Revenue Growth %' = ```
+			
+			DIVIDE(
+			    [Total Revenue] -[Total Revenue LY],
+			   [Total Revenue]
+			)
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 075a6ab0-8c08-4ef7-91fe-a3c63c2f48c6
+
+	measure 'Total Revenue LY' = CALCULATE([Total Revenue], SAMEPERIODLASTYEAR('Date'[Date]))
+		lineageTag: 47e37c30-a345-4b57-8e5a-f3e0fe01cd66
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'New Revenue' = ```
+			
+			CALCULATE(
+			    [Total Revenue],
+			    FILTER(Revenue, Revenue[CustomerStatus] = "New")
+			)
+			
+			```
+		lineageTag: e6d7adf3-fc44-4edb-855f-6319afc557b3
+
+	measure 'Avg Deal Age (Days)' = ```
+			
+			AVERAGEX(
+			    FILTER(Deals, ISBLANK(Deals[ClosedDate])),
+			    DATEDIFF(Deals[CreatedDate], TODAY(), DAY)
+			)
+			
+			```
+		lineageTag: b65cf822-bfbe-4e2a-a2b2-0fbac04c610a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Upsell Revenue' = ```
+			
+			CALCULATE(
+			    [Total Revenue],
+			    FILTER(Revenue, Revenue[RevenueType] = "Upsell")
+			)
+			
+			```
+		lineageTag: 8e230879-fb24-492f-913c-45220dea6335
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Churned Revenue' = ```
+			
+			CALCULATE(
+			    [Total Revenue],
+			    FILTER(Revenue, Revenue[CustomerStatus] = "Churned")
+			)
+			
+			```
+		lineageTag: 329a43cc-93a7-4e71-b643-b16cc4d03779
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Open Pipeline Value' = ```
+			
+			CALCULATE(
+			    SUM(Deals[DealValue]),
+			    NOT Deals[DealStage] IN { "Closed Won", "Closed Lost" }
+			)
+			
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 8098c20e-3677-4c99-8f64-8d394140941a
+
+	measure 'Active Opportunities' = ```
+			
+			CALCULATE(
+			    COUNTROWS(Deals),
+			    NOT Deals[DealStage] IN { "Closed Won", "Closed Lost" }
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 6455851b-1eca-4030-8925-beb4744f4916
+
+	measure 'Lead to Won Conversion Rate %' = ```
+			
+			DIVIDE(
+			    [Closed Won Deals],
+			    CALCULATE(COUNTROWS(Deals), Deals[DealStage] = "Lead")
+			)
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 33950713-a206-430a-b00e-438c5db77c3c
+
+	measure 'Pipeline MoM Change %' = ```
+			
+			DIVIDE(
+			    [Open Pipeline Value] - CALCULATE([Open Pipeline Value], DATEADD('Date'[Date], -1, MONTH)),
+			    CALCULATE([Open Pipeline Value], DATEADD('Date'[Date], -1, MONTH))
+			)
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 46ab42cc-6e97-4595-93d6-088f3b675fe2
+
+	measure 'Total Deals This Month' = ```
+			
+			CALCULATE(
+			    COUNTROWS(Deals),
+			    DATESMTD('Date'[Date])
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 80b3834c-3fec-4659-9838-81bfc535fec9
+
+	measure 'Closed Deals' = ```
+			
+			CALCULATE(
+			    COUNTROWS(Deals),
+			    Deals[DealStage] IN { "Closed Won", "Closed Lost" }
+			)
+			
+			```
+		formatString: 0
+		lineageTag: c33c8513-5583-4bd1-bb1e-d324496338ea
+
+	measure 'Closed Deals - Previous Month' = ```
+			
+			CALCULATE(
+			    [Closed Deals],
+			    DATEADD('Date'[Date], -1, MONTH)
+			)
+			
+			```
+		formatString: 0
+		lineageTag: dfe6b3d4-5990-4876-b5e1-79a853007d84
+
+	measure 'Cumulative Closed Deals YTD' = ```
+			
+			CALCULATE(
+			    [Closed Deals],
+			    DATESYTD('Date'[Date])
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 58e9940f-3031-4370-ad66-d46ac016f9f7
+
+	measure 'Sales Rep Count' = ```
+			
+			DISTINCTCOUNT(Deals[SalesRepID])
+			
+			```
+		formatString: 0
+		lineageTag: df376643-1a19-4c77-abe5-4e5ef0d3a4ac
+
+	measure 'Avg Revenue per Rep' = ```
+			
+			AVERAGEX(
+			    VALUES(Deals[SalesRepID]),
+			    CALCULATE([Total Revenue])
+			)
+			
+			```
+		lineageTag: 1bf1afc3-79e1-4a90-a849-d389e2e33807
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Top Performing Sales Rep' = ```
+			
+			VAR TopRepTable =
+			    TOPN(
+			        1,
+			        ADDCOLUMNS(
+			            VALUES(Deals[SalesOwner]),
+			            "Revenue", [Total Revenue]
+			        ),
+			        [Total Revenue], DESC
+			    )
+			RETURN
+			    MAXX(TopRepTable, Deals[SalesOwner])
+			
+			```
+		lineageTag: 414f3b26-5dff-4cf0-87d5-e878295523a3
+
+	measure 'Top Win Rate %' = ```
+			
+			MAXX(
+			    VALUES(Deals[SalesRepID]),
+			   [Win Rate (%)]
+			)
+			
+			```
+		lineageTag: 0ff8c1c4-9aa7-4a83-b0f7-6f7fdb1d3265
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Avg Deal Size per Rep' = ```
+			
+			AVERAGEX(
+			    VALUES(Deals[SalesRepID]),
+			    [Average Deal Size]
+			)
+			
+			```
+		lineageTag: 8c197a1b-62fb-469f-b6bc-e0cdc1941783
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total revenue YTD' = TOTALYTD([Total Revenue], 'Date'[Date])
+		formatString: \$#,0.0;(\$#,0.0);\$#,0.0
+		lineageTag: 6a46958f-9dbf-4eb0-9f15-b3b57e37c9b0
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Revenue Change Drivers' = ```
+			
+			UNION(
+			    ROW("Category", "New Customers", "Amount", [New Revenue]),
+			    ROW("Category", "Upsell Revenue", "Amount", [Upsell Revenue]),
+			    ROW("Category", "Churned Customers", "Amount", - [Churned Revenue])
+			)
+			
+			```
+		lineageTag: 8e187c31-6cd0-48ab-bef9-f64a30c20a27
+
+	measure 'LY Var Revenue' = [Total Revenue] - [Total Revenue LY]
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 6b41dbd2-a21e-4eb1-8705-2cc687f4ddcb
+
+	measure 'Forecast Var' = [Total Revenue] - [Forecasted Revenue]
+		formatString: \$#,0.0;(\$#,0.0);\$#,0.0
+		lineageTag: 65d8a635-f1fa-4a1b-9ca7-7b7ac0ee0135
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Forecasted Revenue' = ```
+			
+			VAR Actual = [Total Revenue]
+			VAR RandomFactor =
+			    SWITCH(
+			        TRUE(),
+			        MOD(YEAR(MAX('Date'[Date])) + MONTH(MAX('Date'[Date])), 3) = 0, 1.08,
+			        MOD(YEAR(MAX('Date'[Date])) + MONTH(MAX('Date'[Date])), 5) = 0, 0.92,
+			        MOD(MONTH(MAX('Date'[Date])), 2) = 0, 1.05,
+			        TRUE(), 0.97
+			    )
+			RETURN
+			ROUND(Actual * RandomFactor, 2)
+			
+			```
+		lineageTag: 8711d063-cc9b-4099-ae3b-4c814af2ec88
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Forecast revenue var %' = DIVIDE( [Total Revenue] - [Forecasted Revenue] , [Total Revenue] )
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: b895a57d-8963-4b1c-ab85-a0a57072cb44
+
+	measure 'Total Deals Value' = SUM(Deals[DealValue])
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 3f95bafa-a70c-4e91-aa2e-71b4686e8a94
+
+	measure 'Value of Closed Deals' = ```
+			
+			CALCULATE(
+			[Total Deals Value] ,   Deals[DealStage] IN { "Closed Won", "Closed Lost" }
+			)
+			
+			```
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: f98e2ae0-8d01-4f66-bfdc-125fee2db3f3
+
+	measure 'Total Campaigns' = COUNTROWS('Campaigns')
+		formatString: 0
+		lineageTag: acc67963-52f2-4332-ac7a-3e4e392d41dc
+
+	measure 'Total Budget' = CALCULATE( SUM('Campaigns'[Budget]) , USERELATIONSHIP( Campaigns[StartDate], 'Date'[Date]))
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 2a2729cd-57f8-4ec1-990b-e83d9cd92c3f
+
+	measure 'Average Conversion Rate' =
+			
+			AVERAGEX(
+			    'FactMarketingPerformance',
+			    DIVIDE('FactMarketingPerformance'[CustomersAcquired], 'FactMarketingPerformance'[LeadsGenerated], 0)
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 07653bcb-5195-4904-9e76-c8a6f113209b
+
+	measure 'Actual Spend' = CALCULATE( SUM('Campaigns'[Spend]) , USERELATIONSHIP( Campaigns[StartDate] , 'Date'[Date]))
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 59a5fbf7-8fb8-419a-9b6a-0194c0084cd2
+
+	measure 'Average ROI' =
+			
+			AVERAGEX(
+			    'FactMarketingPerformance',
+			    DIVIDE('FactMarketingPerformance'[RevenueGenerated], [Actual Spend], 0)
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: b3a4ebc7-3a8c-4897-93eb-db3d2818f7b8
+
+	measure 'Total Leads' = COUNTROWS(Leads)
+		formatString: 0.00
+		lineageTag: bd4e9f12-6c54-4e1b-a758-679ff73d2ae8
+
+	measure 'Top Lead Source' =
+			
+			CALCULATE(
+			    FIRSTNONBLANK('Leads'[Source], 1),
+			    TOPN(1, VALUES('Leads'[Source]), CALCULATE(COUNTROWS('Leads')), DESC)
+			)
+		lineageTag: 514ef264-ed7c-4a70-b82a-f347687464cb
+
+	measure 'Conversion Rate' =
+			
+			DIVIDE(
+			    CALCULATE(COUNTROWS('Leads'), 'Leads'[Converted] = TRUE()),
+			    COUNTROWS('Leads'),
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: d9126b1b-ec4e-4a38-a883-e0992b9df47b
+
+	measure 'Average Cost per Lead' =
+			
+			DIVIDE(
+			    SUM('Campaigns'[Spend]),
+			    COUNTROWS('Leads'),
+			    0
+			)
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 9f12ef20-114f-4d6a-ac13-8f0b16412c70
+
+	measure 'Total Emails Sent' = SUM('FactMarketingPerformance'[EmailsSent])
+		formatString: 0.00
+		lineageTag: c594fc5b-a535-4403-8ffc-8210db1b93df
+
+	measure 'Open Rate' =
+			
+			DIVIDE(
+			    SUM('FactMarketingPerformance'[Opens]),
+			    SUM('FactMarketingPerformance'[EmailsSent]),
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: c206f51b-de5b-482f-b1e6-3b22e1b2e923
+
+	measure 'Click Rate' =
+			
+			DIVIDE(
+			    SUM('FactMarketingPerformance'[Clicks_Email]),
+			    SUM('FactMarketingPerformance'[EmailsSent]),
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 600d4b8d-cd0a-4fa2-b11a-f87eae8c4912
+
+	measure 'Unsubscribe Rate' =
+			
+			DIVIDE(
+			    SUM('FactMarketingPerformance'[Unsubscribes]),
+			    SUM('FactMarketingPerformance'[EmailsSent]),
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 2b0ab89e-4768-4cdf-ad55-9c1e9dfa8a62
+
+	measure 'Social Engagement Rate' = ```
+			
+			DIVIDE(
+			    SUM('FactMarketingPerformance'[Likes]) + 
+			    SUM('FactMarketingPerformance'[Comments]) + 
+			    SUM('FactMarketingPerformance'[Shares]),
+			    SUM('FactMarketingPerformance'[Impressions]),
+			    0
+			)
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 144e0a47-13b2-487b-825a-2c275f1ef1cb
+
+	measure 'Cost per Lead (CPL)' =
+			
+			DIVIDE(
+			    SUM('Campaigns'[Spend]),
+			   [Total Leads],
+			    0
+			)
+		lineageTag: 7b0a9af2-3680-45f5-9e70-559f226326da
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Customer Acquisition Cost (CAC)' =
+			
+			DIVIDE(
+			    SUM('Campaigns'[Spend]),
+			    [Total Customers],
+			    0
+			)
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 2c38f210-a07d-470e-84fd-a4714a4d7034
+
+	measure 'Marketing ROI %' =
+			
+			DIVIDE(
+			    SUM('FactMarketingPerformance'[RevenueGenerated]),
+			    SUM('Campaigns'[Spend]),
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 3e6333fd-e8ca-4ccc-a236-9cffcbcf4c7d
+
+	measure 'Highest ROI Campaign' = ```
+			
+			CALCULATE(
+			    FIRSTNONBLANK('Campaigns'[CampaignName], 1),
+			    TOPN(1, 'FactMarketingPerformance', 
+			        DIVIDE([RevenueGenerated], RELATED('Campaigns'[Spend]), 0), DESC)
+			)
+			```
+		lineageTag: 0092b551-425e-4585-be07-776e43b6d10f
+
+	measure 'Average Cost per Lead LY' =
+			
+			CALCULATE( [Average Cost per Lead] , SAMEPERIODLASTYEAR('Date'[Date]))
+		lineageTag: ae6a1543-61c9-4ff4-895a-94d82a7e71e8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total leads LY' = CALCULATE( [Total Leads] , SAMEPERIODLASTYEAR( 'Date'[Date]))
+		formatString: 0
+		lineageTag: 5494ac54-b7fc-4d53-be8d-a5197faa2d40
+
+	measure 'Total Followers' = ```
+			
+			SUM(FactMarketingPerformance[Followers])
+			
+			```
+		formatString: 0
+		lineageTag: 4db89bb9-4af6-4d0b-9ea7-4837e3512a67
+
+	measure 'Click-Through Rate (CTR)' =
+			
+			DIVIDE(
+			    SUM(FactMarketingPerformance[Clicks]),
+			    SUM(FactMarketingPerformance[Impressions]),
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 8b8604dc-75ab-4dc2-b0a1-f876a1e9fcf7
+
+	measure 'Total Engagement' =
+			
+			SUM(FactMarketingPerformance[Likes]) +
+			SUM(FactMarketingPerformance[Comments]) +
+			SUM(FactMarketingPerformance[Shares])
+		formatString: 0
+		lineageTag: ab6d0fb3-7ff3-4405-8446-4a187b663b2a
+
+	column 'Crm Calculations'
+		dataType: string
+		isHidden
+		lineageTag: cb88af6b-2c98-4820-b0a2-39f53b078678
+		summarizeBy: none
+		sourceColumn: Crm Calculations
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Crm Calculations' = m
+		mode: import
+		source =
+				let
+				    Source = ""
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+

@@ -1,0 +1,82 @@
+table Leads
+	lineageTag: 6ef5f6f4-9b51-4994-a942-c96c4fb34d6a
+
+	column LeadID
+		dataType: string
+		lineageTag: 7582ad26-6041-4bfa-b863-bd8b7367e56f
+		summarizeBy: none
+		sourceColumn: LeadID
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerID
+		dataType: int64
+		formatString: 0
+		lineageTag: fb577ffa-e290-4b14-bd92-05246df968dd
+		summarizeBy: none
+		sourceColumn: CustomerID
+
+		annotation SummarizationSetBy = Automatic
+
+	column CampaignID
+		dataType: string
+		lineageTag: 070229a9-ba93-4d68-a528-cbe845c73fd9
+		summarizeBy: none
+		sourceColumn: CampaignID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Source
+		dataType: string
+		lineageTag: e770b5fd-ae5a-4871-8340-ea8100a57a6b
+		summarizeBy: none
+		sourceColumn: Source
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 8ed1fafd-f490-4afc-afed-c3c6b57714bf
+		summarizeBy: none
+		sourceColumn: CreatedDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Converted
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: aa510a36-f8e1-47b3-8b0a-a0730fabfbc9
+		summarizeBy: none
+		sourceColumn: Converted
+
+		annotation SummarizationSetBy = Automatic
+
+	column ConversionDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 34ebcf11-1b54-4391-ac78-7c22888640dc
+		summarizeBy: none
+		sourceColumn: ConversionDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition Leads = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("\\Mac\Home\Documents\Power BI For Everyone\Course Presentation\Module 6 Data Viz\CRM Template\Data\CRM_Dashboard_WithRegionID.xlsx"), null, true),
+				    Leads_Sheet = Source{[Item="Leads",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Leads_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"LeadID", type text}, {"CustomerID", Int64.Type}, {"CampaignID", type text}, {"Source", type text}, {"CreatedDate", type date}, {"Converted", type logical}, {"ConversionDate", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

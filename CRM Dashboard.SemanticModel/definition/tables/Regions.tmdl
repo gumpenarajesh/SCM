@@ -1,0 +1,51 @@
+table Regions
+	lineageTag: 69bf4cf6-77c6-4964-979f-03a184bd178e
+
+	column RegionID
+		dataType: int64
+		formatString: 0
+		lineageTag: 04bca5ab-b57d-41ee-b0c5-5e0bec49ceca
+		summarizeBy: none
+		sourceColumn: RegionID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: 908ce6e8-d653-4e3f-9c1f-01efd81b7e68
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		lineageTag: 4c1588d0-afd4-4c34-842d-5dfc3afd0681
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: 2a38be5b-a953-4ed4-bd44-ed0951fada4f
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Regions = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("\\Mac\Home\Documents\Power BI For Everyone\Course Presentation\Module 6 Data Viz\CRM Template\Data\CRM_Dashboard_WithRegionID.xlsx"), null, true),
+				    Regions_Sheet = Source{[Item="Regions",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Regions_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"RegionID", Int64.Type}, {"Region", type text}, {"Country", type text}, {"City", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

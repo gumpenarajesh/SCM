@@ -1,0 +1,150 @@
+table 'analytics inventory_kpi_final'
+	lineageTag: 6620966e-9eac-436a-98f0-83c6d49577de
+
+	column Material
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: d3476cda-e999-4f3d-af37-66eca5600241
+		summarizeBy: none
+		sourceColumn: Material
+
+		annotation SummarizationSetBy = Automatic
+
+	column Plant
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: aa9ef06e-3583-4ac9-9a7d-b6d556908fe8
+		summarizeBy: none
+		sourceColumn: Plant
+
+		annotation SummarizationSetBy = Automatic
+
+	column DeadStock
+		dataType: double
+		sourceProviderType: decimal(38, 4)
+		lineageTag: 7235ddcd-bb82-4c3d-8225-33ce463cd400
+		summarizeBy: sum
+		sourceColumn: DeadStock
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SlowMovingStock
+		dataType: double
+		sourceProviderType: decimal(38, 4)
+		lineageTag: 4df03c54-9414-49da-a9ac-5c33961c38be
+		summarizeBy: sum
+		sourceColumn: SlowMovingStock
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column NearExpiry
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: a1ad0127-07e7-4046-bbce-f197bb23f03b
+		summarizeBy: sum
+		sourceColumn: NearExpiry
+
+		annotation SummarizationSetBy = Automatic
+
+	column WCAR
+		dataType: double
+		sourceProviderType: decimal(38, 4)
+		lineageTag: 1f6b5b30-ffd1-47a0-86c6-5537d98cff8d
+		summarizeBy: sum
+		sourceColumn: WCAR
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DOH
+		dataType: double
+		sourceProviderType: decimal(38, 6)
+		lineageTag: 72f67086-6d88-4882-b8e6-a42c90c92b67
+		summarizeBy: sum
+		sourceColumn: DOH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column InventoryTurns
+		dataType: double
+		sourceProviderType: decimal(38, 6)
+		lineageTag: d56d44b2-9f00-4f0a-9a04-23da9c5b2b95
+		summarizeBy: sum
+		sourceColumn: InventoryTurns
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column OTD_Pct
+		dataType: double
+		sourceProviderType: decimal(38, 16)
+		lineageTag: 38bfeb0a-a1f0-4f00-b29b-d612b75a1332
+		summarizeBy: sum
+		sourceColumn: OTD_Pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column FillRate
+		dataType: double
+		sourceProviderType: decimal(38, 11)
+		lineageTag: aebdf3b5-1428-42a5-bdc8-d346452cc698
+		summarizeBy: sum
+		sourceColumn: FillRate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column LeadTime
+		dataType: double
+		sourceProviderType: float
+		lineageTag: b183d1fe-beff-4a26-b1e2-64974927c2d6
+		summarizeBy: sum
+		sourceColumn: LeadTime
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MAPVariance
+		dataType: double
+		sourceProviderType: decimal(38, 18)
+		lineageTag: 2ea437d2-5b7f-48af-9788-a6d73e82f3ba
+		summarizeBy: sum
+		sourceColumn: MAPVariance
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TotalInventoryValue
+		dataType: double
+		sourceProviderType: decimal(38, 4)
+		lineageTag: c591b602-5754-413b-9b85-38a2a00ea2cc
+		summarizeBy: sum
+		sourceColumn: TotalInventoryValue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'analytics inventory_kpi_final' = m
+		mode: directQuery
+		source =
+				let
+				    Source = Sql.Database("ecs2ceyl3h7exlnafpr5d46fqi-gd7o55xabh6ufod5wszxfqw6pi.datawarehouse.fabric.microsoft.com", "SCM_Silver_LH"),
+				    analytics_inventory_kpi_final = Source{[Schema="analytics",Item="inventory_kpi_final"]}[Data]
+				in
+				    analytics_inventory_kpi_final
+
